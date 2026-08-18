@@ -1,6 +1,16 @@
 /** Design philosophy: Field Notes Utility — a bold, spare Hero headline leads into authentic, unchanged product evidence. */
 
-import { ArrowRight, ClipboardCheck, Copy, FolderTree, Hash, Link2, LockKeyhole, MapPinned, Search, Sparkles, Star } from "lucide-react";
+import ArrowRight from "lucide-react/dist/esm/icons/arrow-right";
+import ClipboardCheck from "lucide-react/dist/esm/icons/clipboard-check";
+import Copy from "lucide-react/dist/esm/icons/copy";
+import FolderTree from "lucide-react/dist/esm/icons/folder-tree";
+import Hash from "lucide-react/dist/esm/icons/hash";
+import Link2 from "lucide-react/dist/esm/icons/link-2";
+import LockKeyhole from "lucide-react/dist/esm/icons/lock-keyhole";
+import MapPinned from "lucide-react/dist/esm/icons/map-pinned";
+import Search from "lucide-react/dist/esm/icons/search";
+import Sparkles from "lucide-react/dist/esm/icons/sparkles";
+import Star from "lucide-react/dist/esm/icons/star";
 import { Link } from "wouter";
 import AndroidPhoneFrame from "@/components/AndroidPhoneFrame";
 import SectionHeading from "@/components/SectionHeading";

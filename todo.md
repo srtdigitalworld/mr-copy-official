@@ -24,3 +24,10 @@
 - [x] Make “One Tap Copy” the dominant Hero headline.
 - [x] Place “Auto-Save Copy.” directly beneath the headline as the supporting slogan.
 - [x] Preserve the unchanged real app screenshot inside the Hero phone mockup and validate both breakpoints.
+
+## Lighthouse Performance Optimization
+
+- [x] Establish clean mobile and desktop Lighthouse baselines without extension interference.
+- [x] Reduce critical rendering-path costs, image weight, font work, and initial JavaScript.
+- [x] Eliminate avoidable layout shifts and defer non-critical page work.
+- [x] Re-audit mobile and desktop Lighthouse results and preserve visual fidelity.

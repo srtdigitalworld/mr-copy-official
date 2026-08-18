@@ -38,8 +38,8 @@ export const supportedPlatforms = [
   "YouTube", "TikTok", "Instagram", "Facebook", "Reddit", "Spotify", "Google Maps", "Amazon India", "Flipkart", "Myntra", "Meesho", "Nykaa", "Tata Cliq", "JioMart", "Shopsy", "Ajio",
 ];
 
-export const appIconAsset = "/manus-storage/mr_copy_app_icon_70511953.png";
-export const floatingIconAsset = "/manus-storage/mr_copy_floating_icon_4684af9b.png";
+export const appIconAsset = "/manus-storage/mr_copy_app_icon_256_f8bbff73.webp";
+export const floatingIconAsset = "/manus-storage/mr_copy_floating_icon_256_664f6c2c.webp";
 export const wordmarkAsset = "/manus-storage/mr_copy_wordmark_baa6b64b.png";
 export const createContentScreenshotAsset = "/manus-storage/mr-copy-create-content-screen_c2b7b74b.webp";
 export const trashScreenshotAsset = "/manus-storage/mr-copy-trash-screen_20973899.webp";

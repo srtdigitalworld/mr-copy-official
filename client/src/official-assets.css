@@ -3,6 +3,7 @@
 .brand-lockup img { object-fit: contain; }
 
 .official-hero { overflow: visible; }
+.site-shell main > div > section:not(:first-child) { content-visibility: auto; contain-intrinsic-size: auto 700px; }
 .official-hero-visual { position: relative; min-height: 500px; border-left: 3px solid var(--primary); }
 .hero-slogan { margin: -8px 0 20px; color: var(--primary); font-family: "Manrope", sans-serif; font-size: clamp(20px, 2.1vw, 29px); font-weight: 800; letter-spacing: -.8px; line-height: 1.1; }
 .real-phone-frame { margin: 0; }

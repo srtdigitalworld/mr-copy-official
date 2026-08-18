@@ -2,15 +2,18 @@
 
 import { useEffect, useState, type ReactNode } from "react";
 import { Link, useLocation } from "wouter";
-import { ExternalLink, Menu, Moon, Sun, X } from "lucide-react";
-import { toast } from "sonner";
+import ExternalLink from "lucide-react/dist/esm/icons/external-link";
+import Menu from "lucide-react/dist/esm/icons/menu";
+import Moon from "lucide-react/dist/esm/icons/moon";
+import Sun from "lucide-react/dist/esm/icons/sun";
+import X from "lucide-react/dist/esm/icons/x";
 import { appIconAsset, footerLinks, navItems, siteConfig } from "@/lib/site";
 
 type SiteShellProps = { children: ReactNode };
 
 export function StoreCta({ label = "Get it on Google Play", className = "" }: { label?: string; className?: string }) {
   if (siteConfig.playStoreUrl) return <a className={`button button-primary ${className}`} href={siteConfig.playStoreUrl} target="_blank" rel="noreferrer"><span>{label}</span><ExternalLink aria-hidden="true" size={16} /></a>;
-  return <button type="button" className={`button button-primary ${className}`} onClick={() => toast("Google Play link pending", { description: "The official Google Play URL will be added before launch." })}><span>{label}</span><ExternalLink aria-hidden="true" size={16} /></button>;
+  return <button type="button" className={`button button-primary ${className}`} onClick={() => window.alert("The official Google Play URL will be added before launch.")}><span>{label}</span><ExternalLink aria-hidden="true" size={16} /></button>;
 }
 
 function ThemeToggle() {

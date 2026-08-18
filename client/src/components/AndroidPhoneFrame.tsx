@@ -8,5 +8,5 @@ type AndroidPhoneFrameProps = {
 };
 
 export default function AndroidPhoneFrame({ src, alt, className = "", priority = false }: AndroidPhoneFrameProps) {
-  return <figure className={`real-phone-frame ${className}`}><div className="real-phone-shell"><div className="real-phone-screen"><img src={src} alt={alt} loading={priority ? "eager" : "lazy"} fetchPriority={priority ? "high" : "auto"} /></div></div></figure>;
+  return <figure className={`real-phone-frame ${className}`}><div className="real-phone-shell"><div className="real-phone-screen"><img src={src} alt={alt} width="932" height="2048" loading={priority ? "eager" : "lazy"} decoding="async" fetchPriority={priority ? "high" : "auto"} /></div></div></figure>;
 }
