@@ -4,10 +4,20 @@
 
 .official-hero { overflow: visible; }
 .official-hero-visual { position: relative; min-height: 500px; border-left: 3px solid var(--primary); }
+.real-phone-frame { margin: 0; }
+.real-phone-shell { padding: 10px; border: 9px solid #111827; border-radius: 38px; background: #111827; box-shadow: 0 20px 40px rgba(17,24,39,.16); }
+.real-phone-screen { overflow: hidden; border-radius: 23px; background: #F8F9FA; }
+.real-phone-screen img { display: block; width: 100%; height: auto; object-fit: contain; }
+.real-screenshot-hero { display: grid; place-items: center; }
+.hero-real-phone { position: relative; z-index: 1; width: min(49%, 240px); margin-left: 5%; }
+.official-hero-visual .real-phone-shell { padding: 8px; border-width: 8px; border-radius: 31px; }
+.official-hero-visual .real-phone-screen { border-radius: 19px; }
 .official-hero-app-icon { position: absolute; top: 39px; right: 10%; width: min(40vw, 350px); max-width: 350px; object-fit: contain; }
 .official-hero-floating-icon { position: absolute; right: 3%; bottom: 48px; width: min(20vw, 158px); max-width: 158px; object-fit: contain; }
 .official-hero-visual .token-one { bottom: 26px; left: 0; }
 .official-hero-visual .token-two { top: 33px; right: 0; }
+.showcase-real-phone { display: grid; min-height: 440px; place-items: center; }
+.showcase-real-phone .real-phone-frame { width: min(100%, 215px); }
 
 .official-reference-board, .feature-reference-sheet, .feature-organization-sheet, .privacy-asset-panel, .official-icon-panel { border: 1px solid var(--border); background: var(--surface); }
 .official-reference-board { position: relative; min-height: 355px; padding: 23px; border-radius: 18px; box-shadow: 0 18px 35px rgba(17,24,39,.04); }
@@ -47,20 +57,25 @@
 .feature-organization-sheet { justify-items: start; }
 .feature-organization-sheet > img { width: 105px; height: 105px; margin-bottom: 5px; object-fit: contain; }
 .feature-organization-sheet .reference-folder-row { width: 100%; margin-top: 0; }
+.real-screenshot-feature-grid { justify-items: center; }
+.feature-real-phone { width: min(100%, 225px); }
 
 @media (max-width: 1023px) {
   .official-hero-visual { min-height: 410px; max-width: 600px; width: 100%; margin: 0 auto; }
   .official-hero-app-icon { width: min(50vw, 300px); }
+  .hero-real-phone { width: min(38vw, 220px); }
   .page-hero-ledger { grid-template-columns: 100px minmax(0, 1fr); }
 }
 
 @media (max-width: 639px) {
   .official-hero-visual { min-height: 310px; border-left-width: 2px; }
-  .official-hero-app-icon { top: 26px; right: 12%; width: 200px; }
-  .official-hero-floating-icon { right: 0; bottom: 36px; width: 104px; }
+  .hero-real-phone { width: 135px; margin-left: 0; }
+  .official-hero-floating-icon { right: 0; bottom: 36px; width: 78px; }
   .official-hero-visual .token-one { bottom: -29px; }
   .official-hero-visual .token-two { top: 19px; }
   .official-reference-board { min-height: 320px; }
+  .showcase-real-phone { min-height: 330px; }
+  .feature-real-phone { width: 184px; }
   .official-index-grid { grid-template-columns: 1fr; }
   .official-icon-panel { margin: 0 auto; }
   .official-privacy-layout { grid-template-columns: 1fr; }
