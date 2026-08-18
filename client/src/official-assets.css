@@ -1,0 +1,70 @@
+/* Design philosophy: Field Notes Utility — render the owner-supplied official Mr. Copy assets at natural proportions with deliberate whitespace. */
+
+.brand-lockup img { object-fit: contain; }
+
+.official-hero { overflow: visible; }
+.official-hero-visual { position: relative; min-height: 500px; border-left: 3px solid var(--primary); }
+.official-hero-app-icon { position: absolute; top: 39px; right: 10%; width: min(40vw, 350px); max-width: 350px; object-fit: contain; }
+.official-hero-floating-icon { position: absolute; right: 3%; bottom: 48px; width: min(20vw, 158px); max-width: 158px; object-fit: contain; }
+.official-hero-visual .token-one { bottom: 26px; left: 0; }
+.official-hero-visual .token-two { top: 33px; right: 0; }
+
+.official-reference-board, .feature-reference-sheet, .feature-organization-sheet, .privacy-asset-panel, .official-icon-panel { border: 1px solid var(--border); background: var(--surface); }
+.official-reference-board { position: relative; min-height: 355px; padding: 23px; border-radius: 18px; box-shadow: 0 18px 35px rgba(17,24,39,.04); }
+.reference-board-header { display: flex; align-items: center; gap: 9px; padding-bottom: 18px; border-bottom: 1px solid var(--border); color: var(--foreground); font-size: 12px; font-weight: 800; }
+.reference-board-header img { width: 29px; height: 29px; object-fit: contain; }
+.reference-board-header i { margin-left: auto; padding: 5px 7px; border-radius: 6px; color: var(--primary); background: color-mix(in srgb,var(--primary) 10%,var(--surface)); font-size: 9px; font-style: normal; font-weight: 800; text-transform: uppercase; }
+.reference-line { width: 86%; height: 10px; margin-top: 21px; border-radius: 6px; background: var(--surface-container); }
+.reference-line-wide { width: 68%; height: 13px; background: color-mix(in srgb,var(--primary) 15%,var(--surface)); }
+.reference-line-short { width: 47%; margin-top: 8px; }
+.reference-token-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 18px; }
+.reference-token-row span { padding: 5px 7px; border: 1px solid var(--border); border-radius: 6px; color: var(--primary); background: color-mix(in srgb,var(--primary) 7%,var(--surface)); font-size: 9px; font-weight: 800; text-transform: uppercase; }
+.reference-folder-row { display: flex; align-items: center; gap: 9px; margin-top: 13px; padding: 10px; border: 1px solid var(--border); border-radius: 9px; color: var(--secondary-text); font-size: 11px; }
+.reference-folder-row svg { color: var(--primary); }
+.reference-folder-row span { color: var(--foreground); font-weight: 800; }
+.reference-folder-row small { margin-left: auto; color: var(--tertiary-text); font-weight: 700; }
+
+.official-index-grid { grid-template-columns: .8fr 1.2fr; }
+.official-icon-panel { display: grid; justify-items: center; gap: 13px; width: min(100%, 310px); padding: 26px; border-radius: 18px; text-align: center; }
+.official-icon-panel img { width: 142px; height: 142px; object-fit: contain; }
+.official-icon-panel span { color: var(--foreground); font-family: "Manrope", sans-serif; font-size: 15px; font-weight: 800; }
+.official-icon-panel small { color: var(--tertiary-text); font-size: 10px; font-weight: 700; }
+.index-row em { display: inline-block; margin-top: 7px; color: var(--tertiary-text); font-size: 9px; font-style: normal; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+
+.official-privacy-layout { grid-template-columns: .9fr .72fr; }
+.privacy-asset-panel { display: grid; justify-items: center; gap: 11px; padding: 24px; border-radius: 15px; text-align: center; }
+.privacy-asset-panel img { width: 124px; height: 124px; object-fit: contain; }
+.privacy-asset-panel span { color: var(--foreground); font-size: 13px; font-weight: 800; }
+.privacy-asset-panel small { max-width: 210px; color: var(--secondary-text); font-size: 10px; line-height: 1.45; }
+
+.feature-reference-sheet, .feature-organization-sheet { display: grid; gap: 15px; min-height: 270px; padding: 25px; border-radius: 18px; align-content: start; }
+.feature-reference-sheet { grid-template-columns: 76px 1fr; }
+.feature-reference-sheet > img { width: 76px; height: 76px; object-fit: contain; }
+.feature-reference-sheet small { display: block; color: var(--primary); font-size: 10px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.feature-reference-sheet strong { display: block; margin-top: 8px; color: var(--foreground); font-family: "Manrope", sans-serif; font-size: 19px; line-height: 1.2; }
+.feature-reference-sheet div span { display: inline-block; margin-top: 9px; color: var(--secondary-text); font-size: 11px; }
+.feature-reference-sheet .reference-token-row { grid-column: 1 / -1; margin-top: 6px; padding-top: 15px; border-top: 1px solid var(--border); }
+.feature-organization-sheet { justify-items: start; }
+.feature-organization-sheet > img { width: 105px; height: 105px; margin-bottom: 5px; object-fit: contain; }
+.feature-organization-sheet .reference-folder-row { width: 100%; margin-top: 0; }
+
+@media (max-width: 1023px) {
+  .official-hero-visual { min-height: 410px; max-width: 600px; width: 100%; margin: 0 auto; }
+  .official-hero-app-icon { width: min(50vw, 300px); }
+  .page-hero-ledger { grid-template-columns: 100px minmax(0, 1fr); }
+}
+
+@media (max-width: 639px) {
+  .official-hero-visual { min-height: 310px; border-left-width: 2px; }
+  .official-hero-app-icon { top: 26px; right: 12%; width: 200px; }
+  .official-hero-floating-icon { right: 0; bottom: 36px; width: 104px; }
+  .official-hero-visual .token-one { bottom: -29px; }
+  .official-hero-visual .token-two { top: 19px; }
+  .official-reference-board { min-height: 320px; }
+  .official-index-grid { grid-template-columns: 1fr; }
+  .official-icon-panel { margin: 0 auto; }
+  .official-privacy-layout { grid-template-columns: 1fr; }
+  .privacy-asset-panel { min-height: 214px; }
+  .feature-reference-sheet { grid-template-columns: 1fr; }
+  .feature-reference-sheet .reference-token-row { grid-column: initial; }
+}

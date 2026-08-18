@@ -4,7 +4,7 @@ import { useEffect, useState, type ReactNode } from "react";
 import { Link, useLocation } from "wouter";
 import { ExternalLink, Menu, Moon, Sun, X } from "lucide-react";
 import { toast } from "sonner";
-import { footerLinks, logoAsset, navItems, siteConfig } from "@/lib/site";
+import { appIconAsset, footerLinks, navItems, siteConfig } from "@/lib/site";
 
 type SiteShellProps = { children: ReactNode };
 
@@ -21,7 +21,7 @@ function ThemeToggle() {
 }
 
 function BrandLockup() {
-  return <Link href="/" className="brand-lockup" aria-label="Mr. Copy home"><img src={logoAsset} width="38" height="38" alt="Mr. Copy" /><span><strong>Mr. Copy</strong><em>One Tap Copy</em></span></Link>;
+  return <Link href="/" className="brand-lockup" aria-label="Mr. Copy home"><img src={appIconAsset} width="38" height="38" alt="Official Mr. Copy app icon" /><span><strong>Mr. Copy</strong><em>One Tap Copy</em></span></Link>;
 }
 
 export default function SiteShell({ children }: SiteShellProps) {
