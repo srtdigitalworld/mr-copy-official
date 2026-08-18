@@ -1,0 +1,11 @@
+/** Design philosophy: Field Notes Utility — transparent support status is presented as a practical configuration record. */
+
+import { ClipboardCheck, Mail, Wrench } from "lucide-react";
+import { Link } from "wouter";
+import { siteConfig } from "@/lib/site";
+import { usePageMeta } from "@/hooks/usePageMeta";
+
+export default function Contact() {
+  usePageMeta({ title: "Contact", description: "Mr. Copy support contact status and the information required before the official support route is published.", path: "/contact" });
+  return <div className="contact-page"><section className="page-hero contact-hero"><div className="shell page-hero-ledger"><aside className="hero-ledger-rail" aria-hidden="true"><span>07</span><i /></aside><div className="page-hero-copy"><p className="eyebrow">Contact record</p><h1>Support details, ready for the official route.</h1><p>Mr. Copy’s verified support contact has not yet been provided in the product materials. This page is intentionally transparent about that status.</p></div></div></section><section className="section"><div className="shell contact-grid"><article className="contact-status-card"><div className="contact-icon"><Mail size={22} aria-hidden="true" /></div><p className="eyebrow">Support email</p><h2>{siteConfig.supportEmail || "Pending owner configuration"}</h2><p>Before production publishing, add a verified support email in <code>siteConfig.supportEmail</code>. No unverified address or physical location is shown here.</p></article><article className="contact-status-card"><div className="contact-icon"><Wrench size={22} aria-hidden="true" /></div><p className="eyebrow">Account requests</p><h2>Use the request-preparation page</h2><p>Account-deletion requests are prepared locally and are never presented as automatically completed.</p><Link className="text-link" href="/delete-account">Prepare an account request</Link></article><article className="contact-status-card"><div className="contact-icon"><ClipboardCheck size={22} aria-hidden="true" /></div><p className="eyebrow">Before launch</p><h2>Verify the outbound links</h2><p>Set the official Google Play URL and support email in the central content configuration before publishing.</p></article></div></section></div>;
+}

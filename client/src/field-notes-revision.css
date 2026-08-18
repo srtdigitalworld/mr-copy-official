@@ -1,0 +1,212 @@
+/* Design philosophy: Field Notes Utility — strengthen editorial rails, concrete reference artifacts, and precise violet use. */
+
+.button-primary,
+.button-primary:hover {
+  box-shadow: none;
+}
+
+.button-primary:hover {
+  transform: translateY(-1px);
+}
+
+.page-hero-ledger {
+  display: grid;
+  grid-template-columns: 132px minmax(0, 1fr);
+  gap: clamp(30px, 7vw, 120px);
+  align-items: center;
+}
+
+.hero-ledger-rail {
+  display: grid;
+  align-self: stretch;
+  align-content: start;
+  gap: 12px;
+  padding-top: 8px;
+  color: var(--tertiary-text);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .1em;
+}
+
+.hero-ledger-rail i {
+  display: block;
+  width: 3px;
+  min-height: 110px;
+  margin-left: 5px;
+  border-radius: 3px;
+  background: var(--primary);
+}
+
+.page-hero-ledger .page-hero-copy {
+  max-width: 760px;
+}
+
+.page-hero-ledger .page-hero-copy > p:not(.eyebrow) {
+  max-width: 600px;
+}
+
+.page-hero .hero-marker {
+  margin-bottom: 14px;
+}
+
+.page-hero .hero-marker .page-rail-label {
+  color: var(--tertiary-text);
+}
+
+.pricing-metadata,
+.catalog-artifact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 16px;
+}
+
+.pricing-metadata span,
+.catalog-artifact span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 23px;
+  padding: 4px 7px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  color: var(--secondary-text);
+  background: var(--background);
+  font-family: "Roboto", sans-serif;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .035em;
+  text-transform: uppercase;
+}
+
+.pricing-metadata span:first-child,
+.catalog-artifact span:first-child {
+  border-color: color-mix(in srgb, var(--primary) 35%, var(--border));
+  color: var(--primary);
+}
+
+.catalog-card {
+  position: relative;
+  display: flex;
+  min-height: 224px;
+  flex-direction: column;
+  border-radius: 12px;
+  box-shadow: none;
+}
+
+.catalog-card::after {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 3px;
+  height: 22px;
+  border-radius: 4px;
+  background: var(--primary);
+  content: "";
+  opacity: .78;
+}
+
+.catalog-card-head {
+  margin-bottom: 24px;
+}
+
+.catalog-card-head > svg {
+  margin-right: 14px;
+}
+
+.catalog-artifact {
+  margin-top: auto;
+  padding-top: 15px;
+  border-top: 1px solid var(--border);
+}
+
+.pricing-card {
+  box-shadow: none;
+}
+
+.pricing-card::before {
+  display: block;
+  width: 38px;
+  height: 3px;
+  margin-bottom: 18px;
+  border-radius: 4px;
+  background: var(--primary);
+  content: "";
+}
+
+.legal-hero .hero-marker {
+  margin-bottom: 14px;
+}
+
+.legal-content {
+  counter-reset: legal-section;
+}
+
+.legal-content section {
+  position: relative;
+  counter-increment: legal-section;
+  padding-left: 58px;
+}
+
+.legal-content section::before {
+  position: absolute;
+  top: 1px;
+  left: 0;
+  color: var(--tertiary-text);
+  content: "0" counter(legal-section);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .1em;
+}
+
+.legal-content section::after {
+  position: absolute;
+  top: 26px;
+  bottom: 30px;
+  left: 5px;
+  width: 2px;
+  border-radius: 2px;
+  background: color-mix(in srgb, var(--primary) 32%, transparent);
+  content: "";
+}
+
+.legal-content section:last-child::after {
+  display: none;
+}
+
+.legal-callout {
+  border-radius: 0;
+  background: transparent;
+}
+
+.contact-status-card,
+.request-form,
+.pricing-card {
+  border-radius: 14px;
+}
+
+@media (max-width: 639px) {
+  .page-hero-ledger {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .hero-ledger-rail {
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    padding-top: 0;
+  }
+
+  .hero-ledger-rail i {
+    width: 46px;
+    min-height: 3px;
+    margin-left: 0;
+  }
+
+  .legal-content section {
+    padding-left: 37px;
+  }
+
+  .legal-content section::after {
+    bottom: 24px;
+  }
+}
