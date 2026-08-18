@@ -5,7 +5,7 @@ import { Link } from "wouter";
 import AndroidPhoneFrame from "@/components/AndroidPhoneFrame";
 import SectionHeading from "@/components/SectionHeading";
 import { StoreCta } from "@/components/SiteShell";
-import { appIconAsset, createContentScreenshotAsset, floatingIconAsset, supportedPlatforms, trashScreenshotAsset } from "@/lib/site";
+import { appIconAsset, heroContentListScreenshotAsset as createContentScreenshotAsset, floatingIconAsset, supportedPlatforms, trashScreenshotAsset } from "@/lib/site";
 import { usePageMeta } from "@/hooks/usePageMeta";
 
 const benefits = [{ icon: Copy, title: "One-Tap Copy", body: "Copy saved content back to your clipboard instantly." }, { icon: Sparkles, title: "Floating Bubble", body: "Access recent clips without leaving the app you are currently using." }, { icon: Hash, title: "Smart Hashtag Extraction", body: "Separate useful captions and hashtag information from supported content." }, { icon: LockKeyhole, title: "Privacy-First Local Storage", body: "Clipboard items and saved local content remain on the device." }];

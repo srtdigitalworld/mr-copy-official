@@ -43,3 +43,4 @@ export const floatingIconAsset = "/manus-storage/mr_copy_floating_icon_4684af9b.
 export const wordmarkAsset = "/manus-storage/mr_copy_wordmark_baa6b64b.png";
 export const createContentScreenshotAsset = "/manus-storage/mr-copy-create-content-screen_c2b7b74b.webp";
 export const trashScreenshotAsset = "/manus-storage/mr-copy-trash-screen_20973899.webp";
+export const heroContentListScreenshotAsset = "/manus-storage/mr-copy-content-list-hero-screen_bb2205ac.webp";

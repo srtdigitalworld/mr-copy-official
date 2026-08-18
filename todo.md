@@ -12,3 +12,9 @@
 - [x] Build responsive Android phone frames that display each screenshot unchanged.
 - [x] Replace neutral product-interface visual stand-ins with the authentic screenshots.
 - [x] Validate the real screenshots on desktop and mobile without distortion or cropping.
+
+## Hero Screenshot Update
+
+- [x] Upload the new owner-supplied content-list screenshot as a managed asset.
+- [x] Use that exact screenshot, unchanged, in the primary Hero Android phone mockup.
+- [x] Validate the revised Hero at desktop and mobile sizes.
