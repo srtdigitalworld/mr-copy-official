@@ -18,3 +18,9 @@
 - [x] Upload the new owner-supplied content-list screenshot as a managed asset.
 - [x] Use that exact screenshot, unchanged, in the primary Hero Android phone mockup.
 - [x] Validate the revised Hero at desktop and mobile sizes.
+
+## Hero Copy Refinement
+
+- [x] Make “One Tap Copy” the dominant Hero headline.
+- [x] Place “Auto-Save Copy.” directly beneath the headline as the supporting slogan.
+- [x] Preserve the unchanged real app screenshot inside the Hero phone mockup and validate both breakpoints.

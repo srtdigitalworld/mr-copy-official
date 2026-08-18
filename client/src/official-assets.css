@@ -4,6 +4,7 @@
 
 .official-hero { overflow: visible; }
 .official-hero-visual { position: relative; min-height: 500px; border-left: 3px solid var(--primary); }
+.hero-slogan { margin: -8px 0 20px; color: var(--primary); font-family: "Manrope", sans-serif; font-size: clamp(20px, 2.1vw, 29px); font-weight: 800; letter-spacing: -.8px; line-height: 1.1; }
 .real-phone-frame { margin: 0; }
 .real-phone-shell { padding: 10px; border: 9px solid #111827; border-radius: 38px; background: #111827; box-shadow: 0 20px 40px rgba(17,24,39,.16); }
 .real-phone-screen { overflow: hidden; border-radius: 23px; background: #F8F9FA; }
@@ -69,6 +70,7 @@
 
 @media (max-width: 639px) {
   .official-hero-visual { min-height: 310px; border-left-width: 2px; }
+  .hero-slogan { margin-top: -5px; margin-bottom: 17px; font-size: 21px; }
   .hero-real-phone { width: 135px; margin-left: 0; }
   .official-hero-floating-icon { right: 0; bottom: 36px; width: 78px; }
   .official-hero-visual .token-one { bottom: -29px; }
