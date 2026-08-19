@@ -80,7 +80,7 @@ describe("account deletion service", () => {
       .mockResolvedValueOnce(new Response(null, { status: 404 }))
       .mockResolvedValueOnce(new Response(JSON.stringify({ error: { message: "USER_NOT_FOUND" } }), { status: 400 }));
     await expect(probeDeletionBackend({ FIREBASE_SERVICE_ACCOUNT: "unused" }, fetcher, vi.fn().mockResolvedValue("server-access-token"))).resolves.toBeUndefined();
-    expect(fetcher.mock.calls[0][0]).toContain("/users/__mr_copy_deletion_backend_probe__");
+    expect(fetcher.mock.calls[0][0]).toContain("/users/mr-copy-deletion-health-probe-not-a-user");
     expect(fetcher.mock.calls[1][0]).toContain("accounts:lookup");
   });
 });

@@ -230,7 +230,10 @@ export async function probeDeletionBackend(
 ): Promise<void> {
   const accessToken = await getAccessToken(env, fetcher);
   const headers = { Authorization: `Bearer ${accessToken}` };
-  const probeId = "__mr_copy_deletion_backend_probe__";
+  // Firestore reserves IDs matching __.*__; use a valid, intentionally
+  // non-user identifier so the probe exercises authorization rather than
+  // failing request validation.
+  const probeId = "mr-copy-deletion-health-probe-not-a-user";
   const firestoreResponse = await fetcher(
     `https://firestore.googleapis.com/v1/projects/${FIREBASE_PROJECT_ID}/databases/(default)/documents/users/${probeId}`,
     { headers },
