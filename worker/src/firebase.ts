@@ -230,16 +230,20 @@ export async function probeDeletionBackend(
 ): Promise<void> {
   const accessToken = await getAccessToken(env, fetcher);
   const headers = { Authorization: `Bearer ${accessToken}` };
-  // Firestore reserves IDs matching __.*__; use a valid, intentionally
-  // non-user identifier so the probe exercises authorization rather than
-  // failing request validation.
-  const probeId = "mr-copy-deletion-health-probe-not-a-user";
+  // Firestore reserves IDs matching __.*__. A fresh UUID makes this valid
+  // probe identifier overwhelmingly certain not to target an existing user.
+  const probeId = `mr-copy-deletion-health-probe-${crypto.randomUUID()}`;
+  const documentUrl = `https://firestore.googleapis.com/v1/projects/${FIREBASE_PROJECT_ID}/databases/(default)/documents/users/${probeId}`;
   const firestoreResponse = await fetcher(
-    `https://firestore.googleapis.com/v1/projects/${FIREBASE_PROJECT_ID}/databases/(default)/documents/users/${probeId}`,
+    documentUrl,
     { headers },
   );
   if (![200, 404].includes(firestoreResponse.status)) {
     throw new DeletionError("BACKEND_FAILURE", `Firestore backend probe failed with HTTP ${firestoreResponse.status}.`);
+  }
+  const firestoreDeleteResponse = await fetcher(documentUrl, { method: "DELETE", headers });
+  if (![200, 404].includes(firestoreDeleteResponse.status)) {
+    throw new DeletionError("BACKEND_FAILURE", `Firestore deletion-permission probe failed with HTTP ${firestoreDeleteResponse.status}.`);
   }
   const authResponse = await fetcher(
     `https://identitytoolkit.googleapis.com/v1/projects/${FIREBASE_PROJECT_ID}/accounts:lookup`,
@@ -250,5 +254,12 @@ export async function probeDeletionBackend(
   // the deployed API behavior. All are read-only and prove this boundary.
   if (![200, 400, 404].includes(authResponse.status)) {
     throw new DeletionError("BACKEND_FAILURE", `Firebase Authentication backend probe failed with HTTP ${authResponse.status}.`);
+  }
+  const authDeleteResponse = await fetcher(
+    `https://identitytoolkit.googleapis.com/v1/projects/${FIREBASE_PROJECT_ID}/accounts:delete`,
+    { method: "POST", headers: { ...headers, "Content-Type": "application/json" }, body: JSON.stringify({ localId: probeId }) },
+  );
+  if (![200, 400, 404].includes(authDeleteResponse.status)) {
+    throw new DeletionError("BACKEND_FAILURE", `Firebase Authentication deletion-permission probe failed with HTTP ${authDeleteResponse.status}.`);
   }
 }
