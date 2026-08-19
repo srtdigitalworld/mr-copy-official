@@ -236,13 +236,13 @@ export async function probeDeletionBackend(
     { headers },
   );
   if (![200, 404].includes(firestoreResponse.status)) {
-    throw new DeletionError("BACKEND_FAILURE", "Firestore backend probe failed.");
+    throw new DeletionError("BACKEND_FAILURE", `Firestore backend probe failed with HTTP ${firestoreResponse.status}.`);
   }
   const authResponse = await fetcher(
     `https://identitytoolkit.googleapis.com/v1/projects/${FIREBASE_PROJECT_ID}/accounts:lookup`,
     { method: "POST", headers: { ...headers, "Content-Type": "application/json" }, body: JSON.stringify({ localId: probeId }) },
   );
   if (![400, 404].includes(authResponse.status)) {
-    throw new DeletionError("BACKEND_FAILURE", "Firebase Authentication backend probe failed.");
+    throw new DeletionError("BACKEND_FAILURE", `Firebase Authentication backend probe failed with HTTP ${authResponse.status}.`);
   }
 }
