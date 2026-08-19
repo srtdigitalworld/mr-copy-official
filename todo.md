@@ -95,7 +95,7 @@
 - [x] Inspect the existing Firebase authentication, data, functions, rules, and deletion workflow without modifying the Android app.
 - [x] Confirm privacy-policy alignment and identify a reusable secure deletion mechanism or an integration blocker.
 - [x] Implement only a verified Google/Firebase-identity-controlled, server-side external deletion flow at /delete-account.
-- [ ] Validate unauthorized, duplicate, expired, invalid, backend-failure, data-targeting, and responsive user flows before publication.
+- [x] Validate unauthorized, duplicate, expired, invalid, backend-failure, data-targeting, and responsive user flows before publication.
 
 ## Free Cloudflare Worker Account Deletion Feasibility
 

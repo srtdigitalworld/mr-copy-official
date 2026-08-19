@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { CheckCircle2, Info, ShieldAlert } from "lucide-react";
 import { getDeletionAuth, signInForAccountDeletion, signOutOfDeletionFlow } from "@/lib/firebase";
+import { deletionErrorMessage } from "@/lib/deleteAccountErrors";
 import { usePageMeta } from "@/hooks/usePageMeta";
 
 export default function DeleteAccount() {
@@ -33,7 +34,7 @@ export default function DeleteAccount() {
       const idToken = await user.getIdToken(true);
       const response = await fetch("/api/account-delete", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ idToken }) });
       const payload = (await response.json().catch(() => ({}))) as { error?: string; message?: string; deleted?: boolean };
-      if (!response.ok || payload.deleted !== true) throw new Error(payload.message || "Account deletion could not be completed.");
+      if (!response.ok || payload.deleted !== true) throw new Error(deletionErrorMessage(payload));
       await signOutOfDeletionFlow();
       setState("success");
     } catch (cause) {
