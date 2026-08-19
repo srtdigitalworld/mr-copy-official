@@ -42,8 +42,8 @@
 
 ## Authenticated Storage Verification
 
-- [ ] Verify a signed-in user can upload a supported file, persist its metadata, and open the managed storage URL.
-- [ ] Verify the authenticated library retains uploaded metadata after reload and removes it from the user’s index on delete.
+- [x] Verify a signed-in user can upload a supported file, persist its metadata, and open the managed storage URL.
+- [x] Verify the authenticated library retains uploaded metadata after reload and removes it from the user’s index on delete.
 
 ## Cloudflare Workers Builds Configuration
 
