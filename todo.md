@@ -77,3 +77,15 @@
 - [x] Add Mr Pro Abdul, clickable email, and clickable Instagram profile to the existing footer without altering its layout.
 - [x] Surface the same official developer details within the existing contact page without redundant information.
 - [x] Verify desktop and mobile layout, contact-link destinations, and the production build.
+
+## My Files Investigation Only
+
+- [x] Trace the My Files navigation item, route, backend connections, storage behavior, and code history without changing implementation.
+- [x] Report why it exists, what it currently does, and whether it should be kept or removed; await the owner’s decision before any implementation.
+
+## My Files Complete Removal
+
+- [x] Verify all My Files client code, server procedures, storage helpers, tests, and dependencies are exclusive before removal.
+- [x] Inspect stored_files data and defer destructive database cleanup if any real user records remain.
+- [x] Remove the My Files navigation, route, page, and exclusive application logic without touching shared infrastructure.
+- [x] Validate the remaining website routes, source references, tests, production build, and desktop/mobile navigation.

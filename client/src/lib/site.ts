@@ -25,7 +25,6 @@ export const siteConfig = {
 
 export const navItems = [
   { href: "/features", label: "Features" },
-  { href: "/files", label: "My Files" },
   { href: "/pricing", label: "Pricing" },
   { href: "/privacy", label: "Privacy" },
   { href: "/contact", label: "Contact" },
@@ -33,7 +32,6 @@ export const navItems = [
 
 export const footerLinks = [
   { href: "/features", label: "Features" },
-  { href: "/files", label: "My Files" },
   { href: "/pricing", label: "Pricing" },
   { href: "/privacy", label: "Privacy" },
   { href: "/terms", label: "Terms" },
