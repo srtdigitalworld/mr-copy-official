@@ -107,3 +107,9 @@
 
 - [x] Add mrcopy.pro to Firebase Authorized Domains and register the minimum required Firebase Web app without changing Android configuration.
 - [x] Create a dedicated least-privilege Firebase service account for the Worker and place its sensitive material only in Cloudflare Worker secrets.
+
+## Deployed Account Deletion Backend Repair
+
+- [ ] Identify the exact deployed Worker/Firebase backend failure using request evidence and logs without deleting real user data.
+- [ ] Verify the deployed Worker secret binding, credential shape, token path, Firebase Authentication API access, Firestore API access, origin boundary, and production route.
+- [ ] Apply only the minimal backend repair and run non-destructive live verification before publishing.

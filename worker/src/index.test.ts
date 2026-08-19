@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { DeletionError, FIREBASE_ISSUER, FIREBASE_PROJECT_ID, deleteVerifiedFirebaseAccount, verifyFirebaseIdToken } from "./firebase";
+import { DeletionError, FIREBASE_ISSUER, FIREBASE_PROJECT_ID, deleteVerifiedFirebaseAccount, getServiceAccountAccessToken, probeDeletionBackend, verifyFirebaseIdToken } from "./firebase";
 
 function encodedToken(payload: Record<string, unknown>): string {
   const header = Buffer.from(JSON.stringify({ alg: "RS256", kid: "test-key" })).toString("base64url");
@@ -68,5 +68,19 @@ describe("account deletion service", () => {
       aud: FIREBASE_PROJECT_ID, iss: FIREBASE_ISSUER, sub: "verified-user", exp: now + 600, iat: now - 700, auth_time: now - 700, email: "owner@example.com", email_verified: true,
     }), fetcher, now)).rejects.toMatchObject<Partial<DeletionError>>({ code: "STALE_AUTH" });
     expect(fetcher).not.toHaveBeenCalled();
+  });
+
+  it("returns a controlled backend failure when the encrypted Worker secret is not a usable service-account key", async () => {
+    await expect(getServiceAccountAccessToken({ FIREBASE_SERVICE_ACCOUNT: JSON.stringify({ client_email: "worker@mr-copy.iam.gserviceaccount.com", private_key: "not-a-pem" }) }, vi.fn()))
+      .rejects.toMatchObject<Partial<DeletionError>>({ code: "BACKEND_FAILURE" });
+  });
+
+  it("performs only non-destructive Firestore and Firebase Authentication probes after server credential exchange", async () => {
+    const fetcher = vi.fn()
+      .mockResolvedValueOnce(new Response(null, { status: 404 }))
+      .mockResolvedValueOnce(new Response(JSON.stringify({ error: { message: "USER_NOT_FOUND" } }), { status: 400 }));
+    await expect(probeDeletionBackend({ FIREBASE_SERVICE_ACCOUNT: "unused" }, fetcher, vi.fn().mockResolvedValue("server-access-token"))).resolves.toBeUndefined();
+    expect(fetcher.mock.calls[0][0]).toContain("/users/__mr_copy_deletion_backend_probe__");
+    expect(fetcher.mock.calls[1][0]).toContain("accounts:lookup");
   });
 });

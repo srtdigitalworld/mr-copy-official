@@ -132,7 +132,7 @@ export async function verifyFirebaseIdToken(idToken: string, fetcher: typeof fet
   return { uid: payload.sub, email: payload.email };
 }
 
-async function getServiceAccountAccessToken(env: DeletionEnv, fetcher: typeof fetch = fetch): Promise<string> {
+export async function getServiceAccountAccessToken(env: DeletionEnv, fetcher: typeof fetch = fetch): Promise<string> {
   let account: ServiceAccount;
   try {
     account = JSON.parse(env.FIREBASE_SERVICE_ACCOUNT) as ServiceAccount;
@@ -152,18 +152,23 @@ async function getServiceAccountAccessToken(env: DeletionEnv, fetcher: typeof fe
     iat: now,
     exp: now + 3600,
   }));
-  const key = await crypto.subtle.importKey(
-    "pkcs8",
-    pemToArrayBuffer(account.private_key),
-    { name: "RSASSA-PKCS1-v1_5", hash: "SHA-256" },
-    false,
-    ["sign"],
-  );
-  const signature = await crypto.subtle.sign(
-    { name: "RSASSA-PKCS1-v1_5" },
-    key,
-    toArrayBuffer(new TextEncoder().encode(`${encodedHeader}.${encodedPayload}`)),
-  );
+  let signature: ArrayBuffer;
+  try {
+    const key = await crypto.subtle.importKey(
+      "pkcs8",
+      pemToArrayBuffer(account.private_key),
+      { name: "RSASSA-PKCS1-v1_5", hash: "SHA-256" },
+      false,
+      ["sign"],
+    );
+    signature = await crypto.subtle.sign(
+      { name: "RSASSA-PKCS1-v1_5" },
+      key,
+      toArrayBuffer(new TextEncoder().encode(`${encodedHeader}.${encodedPayload}`)),
+    );
+  } catch {
+    throw new DeletionError("BACKEND_FAILURE", "The account deletion service credential is unavailable or invalid.");
+  }
   const assertion = `${encodedHeader}.${encodedPayload}.${base64UrlEncode(signature)}`;
   const response = await fetcher(account.token_uri || TOKEN_ENDPOINT, {
     method: "POST",
@@ -216,4 +221,28 @@ export async function deleteVerifiedFirebaseAccount(
     return;
   }
   throw new DeletionError("BACKEND_FAILURE", "The account record was removed, but complete account deletion could not finish. Please retry safely.");
+}
+
+export async function probeDeletionBackend(
+  env: DeletionEnv,
+  fetcher: typeof fetch = fetch,
+  getAccessToken: typeof getServiceAccountAccessToken = getServiceAccountAccessToken,
+): Promise<void> {
+  const accessToken = await getAccessToken(env, fetcher);
+  const headers = { Authorization: `Bearer ${accessToken}` };
+  const probeId = "__mr_copy_deletion_backend_probe__";
+  const firestoreResponse = await fetcher(
+    `https://firestore.googleapis.com/v1/projects/${FIREBASE_PROJECT_ID}/databases/(default)/documents/users/${probeId}`,
+    { headers },
+  );
+  if (![200, 404].includes(firestoreResponse.status)) {
+    throw new DeletionError("BACKEND_FAILURE", "Firestore backend probe failed.");
+  }
+  const authResponse = await fetcher(
+    `https://identitytoolkit.googleapis.com/v1/projects/${FIREBASE_PROJECT_ID}/accounts:lookup`,
+    { method: "POST", headers: { ...headers, "Content-Type": "application/json" }, body: JSON.stringify({ localId: probeId }) },
+  );
+  if (![400, 404].includes(authResponse.status)) {
+    throw new DeletionError("BACKEND_FAILURE", "Firebase Authentication backend probe failed.");
+  }
 }
