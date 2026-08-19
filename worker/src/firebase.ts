@@ -1,6 +1,6 @@
 export const FIREBASE_PROJECT_ID = "mr-copy";
 export const FIREBASE_ISSUER = `https://securetoken.google.com/${FIREBASE_PROJECT_ID}`;
-export const FIREBASE_PUBLIC_KEYS_URL = "https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com";
+export const FIREBASE_PUBLIC_KEYS_URL = "https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com";
 const TOKEN_ENDPOINT = "https://oauth2.googleapis.com/token";
 const MAX_AUTH_AGE_SECONDS = 10 * 60;
 
@@ -20,6 +20,7 @@ export type VerifiedFirebaseIdentity = {
 };
 
 type JwtHeader = { alg?: string; kid?: string };
+type FirebaseJwk = JsonWebKey & { kid?: string };
 type JwtPayload = {
   aud?: string;
   iss?: string;
@@ -110,13 +111,13 @@ export async function verifyFirebaseIdToken(idToken: string, fetcher: typeof fet
 
   const keyResponse = await fetcher(FIREBASE_PUBLIC_KEYS_URL);
   if (!keyResponse.ok) throw new DeletionError("BACKEND_FAILURE", "Unable to verify authentication at this time.");
-  const certificates = (await keyResponse.json()) as Record<string, string>;
-  const certificate = certificates[header.kid];
-  if (!certificate) throw new DeletionError("INVALID_AUTH", "The authentication token uses an unknown signing key.");
+  const keySet = (await keyResponse.json()) as { keys?: FirebaseJwk[] };
+  const verificationKey = keySet.keys?.find((key) => key.kid === header.kid);
+  if (!verificationKey) throw new DeletionError("INVALID_AUTH", "The authentication token uses an unknown signing key.");
 
   const publicKey = await crypto.subtle.importKey(
-    "spki",
-    pemToArrayBuffer(certificate),
+    "jwk",
+    verificationKey,
     { name: "RSASSA-PKCS1-v1_5", hash: "SHA-256" },
     false,
     ["verify"],
