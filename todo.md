@@ -31,3 +31,49 @@
 - [x] Reduce critical rendering-path costs, image weight, font work, and initial JavaScript.
 - [x] Eliminate avoidable layout shifts and defer non-critical page work.
 - [x] Re-audit mobile and desktop Lighthouse results and preserve visual fidelity.
+
+## Full-Stack File Storage
+
+- [x] Upgrade the static Mr. Copy project to the managed full-stack foundation.
+- [x] Add a user-owned file metadata model and apply the database migration.
+- [x] Implement authenticated server-side uploads using managed file storage.
+- [x] Add a user-facing file library with loading, empty, error, and upload states.
+- [x] Validate protected access, file persistence, routes, and the production build.
+
+## Authenticated Storage Verification
+
+- [ ] Verify a signed-in user can upload a supported file, persist its metadata, and open the managed storage URL.
+- [ ] Verify the authenticated library retains uploaded metadata after reload and removes it from the user’s index on delete.
+
+## Cloudflare Workers Builds Configuration
+
+- [x] Inspect the existing build output and deployment configuration constraints.
+- [x] Add a minimal valid `wrangler.jsonc` pointing static assets to `./dist/public` with SPA fallback support.
+- [x] Validate the unchanged build output and Wrangler configuration.
+- [x] Commit and push only the Cloudflare deployment configuration change to the connected repository.
+
+## Cloudflare Production Image Delivery Repair
+
+- [x] Inventory every landing-page image reference and test the corresponding mrcopy.pro URLs.
+- [x] Trace the Worker static-assets build output and identify the packaging or path-resolution root cause.
+- [x] Apply the minimal image asset packaging or URL-resolution fix without changing the UI.
+- [x] Deploy the corrected Worker build and verify all production images return valid image content.
+
+## Newly Reported Production Issue
+
+- [x] Review the attached evidence and identify the specific remaining production defect.
+- [x] Apply the minimal targeted repair without changing unrelated UI or deployment behavior.
+- [x] Verify the repair in production and relevant local checks.
+
+## Remaining Lighthouse Accessibility Verification
+
+- [x] Ensure both brand lockups expose visible label text through their accessible names.
+- [x] Resolve the mobile feature-index metadata contrast audit under the evaluated color-scheme condition.
+- [x] Rerun production Lighthouse and confirm the remaining accessibility audits pass.
+- [x] Record the exact confirmed PDF and production audit findings in the issue notes.
+
+## Official Developer Information
+
+- [x] Add Mr Pro Abdul, clickable email, and clickable Instagram profile to the existing footer without altering its layout.
+- [x] Surface the same official developer details within the existing contact page without redundant information.
+- [x] Verify desktop and mobile layout, contact-link destinations, and the production build.

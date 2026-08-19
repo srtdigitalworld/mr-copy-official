@@ -8,7 +8,12 @@ export const siteConfig = {
   description:
     "A lightweight offline clipboard manager, link organizer, and smart content reference tool for Android.",
   playStoreUrl: "",
-  supportEmail: "",
+  supportEmail: "Connect.mrcopy@gmail.com",
+  developer: {
+    name: "Mr Pro Abdul",
+    instagramHandle: "@mrcopy.pro",
+    instagramUrl: "https://www.instagram.com/mrcopy.pro",
+  },
   pricing: {
     trial: "3-Day Free Trial",
     amount: "₹49",
@@ -20,6 +25,7 @@ export const siteConfig = {
 
 export const navItems = [
   { href: "/features", label: "Features" },
+  { href: "/files", label: "My Files" },
   { href: "/pricing", label: "Pricing" },
   { href: "/privacy", label: "Privacy" },
   { href: "/contact", label: "Contact" },
@@ -27,6 +33,7 @@ export const navItems = [
 
 export const footerLinks = [
   { href: "/features", label: "Features" },
+  { href: "/files", label: "My Files" },
   { href: "/pricing", label: "Pricing" },
   { href: "/privacy", label: "Privacy" },
   { href: "/terms", label: "Terms" },
