@@ -24,7 +24,7 @@ function ThemeToggle() {
 }
 
 function BrandLockup() {
-  return <Link href="/" className="brand-lockup" aria-label="Mr. Copy — One Tap Copy home"><img src={appIconAsset} width="38" height="38" alt="Official Mr. Copy app icon" /><span><strong>Mr. Copy</strong><em>One Tap Copy</em></span></Link>;
+  return <Link href="/" className="brand-lockup"><img src={appIconAsset} width="38" height="38" alt="" aria-hidden="true" /><span><strong>Mr. Copy</strong><em>One Tap Copy</em></span></Link>;
 }
 
 export default function SiteShell({ children }: SiteShellProps) {

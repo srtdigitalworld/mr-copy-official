@@ -41,7 +41,8 @@
 .official-icon-panel img { width: 142px; height: 142px; object-fit: contain; }
 .official-icon-panel span { color: var(--foreground); font-family: "Manrope", sans-serif; font-size: 15px; font-weight: 800; }
 .official-icon-panel small { color: var(--tertiary-text); font-size: 10px; font-weight: 700; }
-.index-row em { display: inline-block; margin-top: 7px; color: var(--tertiary-text); font-size: 9px; font-style: normal; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+.index-row p { background: var(--background); }
+.index-row em { display: inline-block; margin-top: 7px; color: var(--tertiary-text); background: var(--background); font-size: 9px; font-style: normal; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
 
 .official-privacy-layout { grid-template-columns: .9fr .72fr; }
 .privacy-asset-panel { display: grid; justify-items: center; gap: 11px; padding: 24px; border-radius: 15px; text-align: center; }
