@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { DeletionError, FIREBASE_ISSUER, FIREBASE_PROJECT_ID, deleteVerifiedFirebaseAccount, getServiceAccountAccessToken, probeDeletionBackend, verifyFirebaseIdToken } from "./firebase";
+import { DeletionError, FIREBASE_ISSUER, FIREBASE_PROJECT_ID, deleteVerifiedFirebaseAccount, getServiceAccountAccessToken, verifyFirebaseIdToken } from "./firebase";
 
 function encodedToken(payload: Record<string, unknown>): string {
   const header = Buffer.from(JSON.stringify({ alg: "RS256", kid: "test-key" })).toString("base64url");
@@ -112,17 +112,4 @@ describe("account deletion service", () => {
       .rejects.toMatchObject<Partial<DeletionError>>({ code: "BACKEND_FAILURE" });
   });
 
-  it("performs only non-destructive Firestore and Firebase Authentication probes against a fresh nonuser ID after server credential exchange", async () => {
-    const fetcher = vi.fn()
-      .mockResolvedValueOnce(new Response(null, { status: 404 }))
-      .mockResolvedValueOnce(new Response(null, { status: 404 }))
-      .mockResolvedValueOnce(new Response(JSON.stringify({ users: [] }), { status: 200 }))
-      .mockResolvedValueOnce(new Response(JSON.stringify({ error: { message: "USER_NOT_FOUND" } }), { status: 400 }));
-    await expect(probeDeletionBackend({ FIREBASE_SERVICE_ACCOUNT: "unused" }, fetcher, vi.fn().mockResolvedValue("server-access-token"))).resolves.toBeUndefined();
-    expect(fetcher.mock.calls[0][0]).toContain("/users/mr-copy-deletion-health-probe-");
-    expect(fetcher.mock.calls[1][1].method).toBe("DELETE");
-    expect(fetcher.mock.calls[2][0]).toContain("accounts:lookup");
-    expect(fetcher.mock.calls[3][0]).toContain("accounts:delete");
-    expect(fetcher.mock.calls[3][1].body).toBe(fetcher.mock.calls[2][1].body);
-  });
 });

@@ -1,4 +1,4 @@
-import { DeletionError, deleteVerifiedFirebaseAccount, probeDeletionBackend, type DeletionEnv } from "./firebase";
+import { DeletionError, deleteVerifiedFirebaseAccount, type DeletionEnv } from "./firebase";
 
 type Env = DeletionEnv & {
   ASSETS: { fetch(request: Request): Promise<Response> };
@@ -51,25 +51,9 @@ async function handleDeletion(request: Request, env: Env): Promise<Response> {
   }
 }
 
-async function handleBackendProbe(request: Request, env: Env): Promise<Response> {
-  if (request.method !== "POST") return response({ error: "METHOD_NOT_ALLOWED" }, 405);
-  if (request.headers.get("Origin") !== SITE_ORIGIN) return response({ error: "ORIGIN_NOT_ALLOWED" }, 403);
-  try {
-    await probeDeletionBackend(env);
-    return response({ ready: true }, 200);
-  } catch (error) {
-    console.error("Account deletion backend probe failed", {
-      code: error instanceof DeletionError ? error.code : "UNKNOWN",
-      stage: error instanceof Error ? error.message : "Unknown backend failure",
-    });
-    return response({ error: "BACKEND_FAILURE" }, 502);
-  }
-}
-
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
-    if (url.pathname === "/api/account-delete/health") return handleBackendProbe(request, env);
     if (url.pathname === "/api/account-delete") return handleDeletion(request, env);
     return env.ASSETS.fetch(request);
   },

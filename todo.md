@@ -113,8 +113,10 @@
 - [x] Identify the deployed diagnostic failure using request evidence and logs without deleting real user data; historical valid-token traces predated log persistence and cannot be reconstructed, while the observed probe 400 was isolated to Firestore’s reserved document-ID validation.
 - [x] Verify the deployed Worker secret binding, credential shape, token path, Firebase Authentication API access, Firestore API access, origin boundary, and production route through a successful read-only/no-op live probe.
 - [x] Apply only the minimal backend repair and run non-destructive live verification before publishing.
-- [ ] Exercise the actual `/api/account-delete` endpoint using a user-controlled disposable Google/Firebase test account, with temporary stage evidence and no real-user action.
-- [ ] If that actual deletion flow fails, apply the smallest targeted repair and rerun the disposable-account verification.
-- [ ] Record final production evidence for the actual endpoint separately from the no-op service-permission probe.
-- [ ] Inspect the persisted Cloudflare trace for the newly reproduced disposable-account deletion failure and isolate the exact operation, HTTP status, and safe error context.
-- [ ] Add narrowly scoped, non-sensitive stage observability to the actual deletion flow only if the current trace lacks sufficient evidence.
+- [x] Exercise the actual `/api/account-delete` endpoint using a user-controlled disposable Google/Firebase test account, with temporary stage evidence and no real-user action.
+- [x] If that actual deletion flow fails, apply the smallest targeted repair and rerun the disposable-account verification.
+- [x] Record final production evidence for the actual endpoint separately from the no-op service-permission probe.
+- [x] Inspect the persisted Cloudflare trace for the newly reproduced disposable-account deletion failure and isolate the exact operation, HTTP status, and safe error context.
+- [x] Confirm the existing persisted trace supplied sufficient non-sensitive evidence; add no further actual-flow observability beyond the targeted `InvalidCharacterError` diagnosis.
+- [x] Remove the temporary public backend health probe after real-endpoint production verification to eliminate the diagnostic-only surface.
+- [ ] Publish the diagnostic-route removal and verify in production that `/api/account-delete/health` no longer resolves while the guarded `/api/account-delete` route remains available.
