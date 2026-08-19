@@ -89,3 +89,21 @@
 - [x] Inspect stored_files data and defer destructive database cleanup if any real user records remain.
 - [x] Remove the My Files navigation, route, page, and exclusive application logic without touching shared infrastructure.
 - [x] Validate the remaining website routes, source references, tests, production build, and desktop/mobile navigation.
+
+## External Account Deletion
+
+- [x] Inspect the existing Firebase authentication, data, functions, rules, and deletion workflow without modifying the Android app.
+- [x] Confirm privacy-policy alignment and identify a reusable secure deletion mechanism or an integration blocker.
+- [x] Implement only a verified Google/Firebase-identity-controlled, server-side external deletion flow at /delete-account.
+- [ ] Validate unauthorized, duplicate, expired, invalid, backend-failure, data-targeting, and responsive user flows before publication.
+
+## Free Cloudflare Worker Account Deletion Feasibility
+
+- [x] Prove or reject a zero-additional-cost Cloudflare Worker architecture for Firebase ID-token verification, Firebase Authentication deletion, and Firestore cleanup.
+- [x] Confirm mrcopy.pro Firebase authorization, Worker-compatible secret handling, request limits, CORS, abuse controls, and exact UID-associated data scope without changing Firebase settings.
+- [x] Implement Google-authenticated external deletion only if verified as secure, feasible, and free; otherwise report the limitation without an insecure workaround.
+
+## Owner-Confirmed Secure Deletion Configuration
+
+- [x] Add mrcopy.pro to Firebase Authorized Domains and register the minimum required Firebase Web app without changing Android configuration.
+- [x] Create a dedicated least-privilege Firebase service account for the Worker and place its sensitive material only in Cloudflare Worker secrets.

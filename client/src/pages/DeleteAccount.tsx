@@ -1,15 +1,46 @@
-/** Design philosophy: Field Notes Utility — a technically honest request-preparation flow uses coordinated rails and never pretends to delete an account automatically. */
+/** Design philosophy: Field Notes Utility — a precise, deliberate account-deletion flow confirms the verified Firebase identity before the server performs a bounded deletion. */
 
-import { useState, type FormEvent } from "react";
-import { CheckCircle2, ClipboardCopy, Info, ShieldAlert } from "lucide-react";
-import { toast } from "sonner";
-import { siteConfig } from "@/lib/site";
+import { useState } from "react";
+import { CheckCircle2, Info, ShieldAlert } from "lucide-react";
+import { getDeletionAuth, signInForAccountDeletion, signOutOfDeletionFlow } from "@/lib/firebase";
 import { usePageMeta } from "@/hooks/usePageMeta";
 
 export default function DeleteAccount() {
-  usePageMeta({ title: "Account Deletion Request", description: "Prepare a technically honest request to delete a Mr. Copy account, with clear information on account data, local content, and Google Play subscriptions.", path: "/delete-account" });
-  const [accountEmail, setAccountEmail] = useState(""); const [details, setDetails] = useState(""); const [requestText, setRequestText] = useState(""); const [error, setError] = useState("");
-  const prepareRequest = (event: FormEvent<HTMLFormElement>) => { event.preventDefault(); if (!accountEmail.trim() || !/^\S+@\S+\.\S+$/.test(accountEmail)) { setError("Enter the email address associated with your Mr. Copy account."); return; } setError(""); setRequestText(`Account deletion request for Mr. Copy\n\nAccount email: ${accountEmail.trim()}\nAdditional details: ${details.trim() || "None provided"}\n\nPlease delete my Mr. Copy account and associated account records. I understand that local content stored on my device is managed on my device, and that I must manage any Google Play subscription separately through Google Play.`); };
-  const copyRequest = async () => { await navigator.clipboard.writeText(requestText); toast("Request copied", { description: "No data was sent from this website." }); };
-  return <div className="delete-page"><section className="page-hero delete-hero"><div className="shell page-hero-ledger"><aside className="hero-ledger-rail" aria-hidden="true"><span>06</span><i /></aside><div className="page-hero-copy"><p className="eyebrow">Account support</p><h1>Account Deletion Request — Mr. Copy</h1><p>Prepare the information needed for an account-deletion request. This page does not automatically delete your account or send any data.</p></div></div></section><section className="section"><div className="shell deletion-grid"><div className="deletion-details"><h2>What an account deletion request covers</h2><ul className="deletion-list"><li><CheckCircle2 size={19} aria-hidden="true" /><span><strong>Account records.</strong> Account information, plan data, trial state, subscription state, and account timestamps associated with the request.</span></li><li><CheckCircle2 size={19} aria-hidden="true" /><span><strong>Local content.</strong> Clipboard items, saved content, folders, and other local data live on your device. Remove the app or clear that data from your device as needed.</span></li><li><CheckCircle2 size={19} aria-hidden="true" /><span><strong>Google Play subscriptions.</strong> Deleting a Mr. Copy account does not cancel a Google Play subscription. Manage that subscription directly through Google Play.</span></li></ul><div className="legal-callout"><Info size={18} aria-hidden="true" /><span>We do not show a fake “delete now” button. A verified support contact must be configured before requests can be sent.</span></div></div><form className="request-form" onSubmit={prepareRequest} noValidate><p className="eyebrow">Prepare request</p><h2>Create a request template</h2><p>Complete this locally to prepare the details for the official support contact once it is configured.</p><label htmlFor="account-email">Account email</label><input id="account-email" name="accountEmail" type="email" autoComplete="email" value={accountEmail} onChange={(event) => setAccountEmail(event.target.value)} placeholder="you@example.com" aria-describedby={error ? "account-email-error" : undefined} /><label htmlFor="request-details">Additional details <span>(optional)</span></label><textarea id="request-details" name="details" value={details} onChange={(event) => setDetails(event.target.value)} placeholder="For example, any details that may help identify the account." rows={4} />{error ? <p id="account-email-error" className="form-error" role="alert">{error}</p> : null}<button type="submit" className="button button-primary">Prepare request</button>{requestText ? <div className="request-ready"><strong>Your request is prepared, not sent.</strong><p>Support email status: {siteConfig.supportEmail ? "configured" : "pending owner configuration"}.</p><button type="button" className="button button-secondary" onClick={copyRequest}><ClipboardCopy size={16} aria-hidden="true" /> Copy request template</button></div> : null}</form></div></section></div>;
+  usePageMeta({ title: "Delete Account", description: "Securely delete a Mr. Copy Firebase account after Google authentication, while keeping local clipboard data and Google Play subscriptions separate.", path: "/delete-account" });
+  const [email, setEmail] = useState<string | null>(null);
+  const [confirmed, setConfirmed] = useState(false);
+  const [state, setState] = useState<"idle" | "signing-in" | "ready" | "deleting" | "success">("idle");
+  const [error, setError] = useState("");
+
+  const signIn = async () => {
+    setState("signing-in"); setError("");
+    try {
+      const result = await signInForAccountDeletion();
+      setEmail(result.email); setState("ready");
+    } catch (cause) {
+      const code = typeof cause === "object" && cause && "code" in cause ? String(cause.code) : "";
+      setError(code === "auth/popup-closed-by-user" ? "Google sign-in was cancelled. No account changes were made." : "Unable to sign in with Google. Please try again.");
+      setState("idle");
+    }
+  };
+
+  const deleteAccount = async () => {
+    if (!confirmed) { setError("Confirm that you understand this permanent action before continuing."); return; }
+    const user = getDeletionAuth().currentUser;
+    if (!user) { setError("Please sign in with Google again before continuing."); setState("idle"); return; }
+    setState("deleting"); setError("");
+    try {
+      const idToken = await user.getIdToken(true);
+      const response = await fetch("/api/account-delete", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ idToken }) });
+      const payload = (await response.json().catch(() => ({}))) as { error?: string; message?: string; deleted?: boolean };
+      if (!response.ok || payload.deleted !== true) throw new Error(payload.message || "Account deletion could not be completed.");
+      await signOutOfDeletionFlow();
+      setState("success");
+    } catch (cause) {
+      setError(cause instanceof Error ? cause.message : "Account deletion could not be completed. Please try again later.");
+      setState("ready");
+    }
+  };
+
+  return <div className="delete-page"><section className="page-hero delete-hero"><div className="shell page-hero-ledger"><aside className="hero-ledger-rail" aria-hidden="true"><span>06</span><i /></aside><div className="page-hero-copy"><p className="eyebrow">Account support</p><h1>Delete your Mr. Copy account.</h1><p>Confirm ownership with the same Google account used for Mr. Copy. The deletion service uses the verified Firebase identity, not an email entered into this page.</p></div></div></section><section className="section"><div className="shell deletion-grid"><div className="deletion-details"><h2>What this deletion covers</h2><ul className="deletion-list"><li><CheckCircle2 size={19} aria-hidden="true" /><span><strong>Firebase account and account record.</strong> The authenticated Firebase account and its matching Firestore account record are deleted only after server-side verification.</span></li><li><CheckCircle2 size={19} aria-hidden="true" /><span><strong>Local content stays on your device.</strong> Clipboard items, saved content, folders, and other local data are not uploaded or removed by this website.</span></li><li><CheckCircle2 size={19} aria-hidden="true" /><span><strong>Google Play subscriptions remain separate.</strong> Deleting a Mr. Copy account does not cancel a Google Play subscription. Manage subscriptions directly through Google Play.</span></li></ul><div className="legal-callout"><Info size={18} aria-hidden="true" /><span>This action is permanent. The website shows completion only after the deletion backend confirms success.</span></div></div><div className="request-form" aria-live="polite"><p className="eyebrow">Secure deletion</p><h2>{state === "success" ? "Account deletion completed" : "Verify your Google account"}</h2>{state === "success" ? <div className="request-ready"><strong>Your Firebase account and matching Mr. Copy account record have been deleted.</strong><p>Local clipboard content remains on your device, and Google Play subscriptions must be managed separately.</p></div> : <><p>Sign in with the Google account used for Mr. Copy. The deletion service derives the account UID from the verified sign-in token.</p>{(state === "ready" || state === "deleting") ? <><p className="form-note">Signed in as <strong>{email || "your Google account"}</strong>.</p><label className="confirm-action"><input type="checkbox" checked={confirmed} onChange={(event) => setConfirmed(event.target.checked)} /> <span>I understand that deleting this account is permanent and does not cancel my Google Play subscription.</span></label><button type="button" className="button button-primary" onClick={deleteAccount} disabled={state === "deleting"}>{state === "deleting" ? "Deleting account…" : "Delete my account"}</button></> : <button type="button" className="button button-primary" onClick={signIn} disabled={state === "signing-in"}>{state === "signing-in" ? "Opening Google sign-in…" : "Sign in with Google"}</button>}{error ? <p className="form-error" role="alert">{error}</p> : null}</>}</div></div></section></div>;
 }
