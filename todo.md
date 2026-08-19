@@ -119,4 +119,4 @@
 - [x] Inspect the persisted Cloudflare trace for the newly reproduced disposable-account deletion failure and isolate the exact operation, HTTP status, and safe error context.
 - [x] Confirm the existing persisted trace supplied sufficient non-sensitive evidence; add no further actual-flow observability beyond the targeted `InvalidCharacterError` diagnosis.
 - [x] Remove the temporary public backend health probe after real-endpoint production verification to eliminate the diagnostic-only surface.
-- [ ] Publish the diagnostic-route removal and verify in production that `/api/account-delete/health` no longer resolves while the guarded `/api/account-delete` route remains available.
+- [x] Publish the diagnostic-route removal and verify in production that `/api/account-delete/health` no longer resolves while the guarded `/api/account-delete` route remains available.

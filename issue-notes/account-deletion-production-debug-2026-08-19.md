@@ -52,3 +52,5 @@ Cloudflare observability recorded a successful `POST https://mrcopy.pro/api/acco
 ### Post-verification hardening
 
 The temporary `/api/account-delete/health` diagnostic endpoint and its fresh-ID no-op probes were removed after the successful real-endpoint verification. The production Worker now exposes only the necessary `/api/account-delete` API route.
+
+After the cleanup build completed, a production `POST /api/account-delete/health` request returned **HTTP 405**, confirming that the former Worker diagnostic handler no longer resolves. A production `POST /api/account-delete` request containing an intentionally invalid token returned **HTTP 401**, confirming that the normal guarded endpoint remains deployed and rejects invalid authentication without account action.
