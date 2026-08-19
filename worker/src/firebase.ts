@@ -245,7 +245,10 @@ export async function probeDeletionBackend(
     `https://identitytoolkit.googleapis.com/v1/projects/${FIREBASE_PROJECT_ID}/accounts:lookup`,
     { method: "POST", headers: { ...headers, "Content-Type": "application/json" }, body: JSON.stringify({ localId: probeId }) },
   );
-  if (![400, 404].includes(authResponse.status)) {
+  // Firebase Authentication may represent an absent localId as either an empty
+  // successful lookup or a not-found/invalid-request response, depending on
+  // the deployed API behavior. All are read-only and prove this boundary.
+  if (![200, 400, 404].includes(authResponse.status)) {
     throw new DeletionError("BACKEND_FAILURE", `Firebase Authentication backend probe failed with HTTP ${authResponse.status}.`);
   }
 }
