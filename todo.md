@@ -215,3 +215,13 @@
 - [x] Prepare a non-executed backlink opportunity map and Google Play URL insertion readiness inventory using existing pages and verified integration locations only; do not submit, contact, pay, or publish anything externally.
 - [x] Run P6 production QA for every modified route and shared artifact: claims evidence, internal links, metadata, canonical, Open Graph, JSON-LD, sitemap, robots, indexability, crawl variants, desktop/tablet/mobile layout, keyboard accessibility, tests, TypeScript, build, console/network state, and no mass-page expansion.
 - [x] Deliver the detailed P6 baseline, opportunity, implementation, readiness, and QA report and stop before P7 pending explicit approval.
+
+- [x] Prepare a planning-only P7 Scope & Priority Proposal grounded in verified product, blueprint, P0–P6, and current architecture evidence; explicitly defer insufficient Google Search Console data, Google Play URL, and commercial terms; do not implement, publish, or submit anything without separate approval.
+
+## P7 Initial-HTML Metadata Parity and Genuine 404 Handling
+
+- [x] Map the 15 canonical routes to their approved initial-response title, description, canonical, Open Graph, H1, and visible-content-backed JSON-LD requirements; preserve all P0–P6 content and claim boundaries.
+- [x] Implement initial server-delivered metadata and schema parity for the 15 existing canonical routes without relying on client-side execution or creating duplicate/conflicting elements after React renders.
+- [x] Implement a genuine HTTP 404 response for unknown document routes while preserving HTTP 200 for every valid route, static assets, HTTP→HTTPS redirect behavior, and `/api/account-delete`.
+- [ ] Run P7 local and production QA for all route/status/head/schema/sitemap/robots requirements, responsive design, keyboard access, console/network state, tests, TypeScript, and production build.
+- [ ] Deliver the P7 completion report and stop before P8 pending explicit owner approval.

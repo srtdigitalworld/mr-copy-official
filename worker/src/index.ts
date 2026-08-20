@@ -1,10 +1,13 @@
 import { DeletionError, deleteVerifiedFirebaseAccount, type DeletionEnv } from "./firebase";
+import { canonicalPublicRoutes, normalizePublicRoute } from "../../shared/publicRoutes";
 
 type Env = DeletionEnv & {
   ASSETS: { fetch(request: Request): Promise<Response> };
 };
 
 const SITE_ORIGIN = "https://mrcopy.pro";
+const staticAssetPrefixes = ["/assets/", "/manus-storage/", "/__manus__/"];
+const staticAssetPaths = new Set(["/robots.txt", "/sitemap.xml", "/favicon.ico"]);
 const jsonHeaders = {
   "Content-Type": "application/json; charset=UTF-8",
   "Cache-Control": "no-store",
@@ -13,6 +16,28 @@ const jsonHeaders = {
 
 function response(body: Record<string, unknown>, status: number): Response {
   return new Response(JSON.stringify(body), { status, headers: jsonHeaders });
+}
+
+function isStaticAssetPath(pathname: string): boolean {
+  return staticAssetPrefixes.some((prefix) => pathname.startsWith(prefix)) || staticAssetPaths.has(pathname);
+}
+
+function isCanonicalPublicRoute(pathname: string): boolean {
+  return canonicalPublicRoutes.includes(pathname as (typeof canonicalPublicRoutes)[number]);
+}
+
+function assetRequest(request: Request, path: string): Request {
+  const url = new URL(request.url);
+  url.pathname = path;
+  return new Request(url.toString(), request);
+}
+
+async function notFoundResponse(request: Request, env: Env): Promise<Response> {
+  const asset = await env.ASSETS.fetch(assetRequest(request, "/404/index.html"));
+  const headers = new Headers(asset.headers);
+  headers.set("Content-Type", "text/html; charset=UTF-8");
+  headers.set("X-Robots-Tag", "noindex");
+  return new Response(asset.body, { status: 404, headers });
 }
 
 async function handleDeletion(request: Request, env: Env): Promise<Response> {
@@ -59,6 +84,14 @@ export default {
       return Response.redirect(url.toString(), 308);
     }
     if (url.pathname === "/api/account-delete") return handleDeletion(request, env);
-    return env.ASSETS.fetch(request);
+    if (url.pathname.startsWith("/api/")) return response({ error: "NOT_FOUND" }, 404);
+    if (isStaticAssetPath(url.pathname)) return env.ASSETS.fetch(request);
+
+    const canonicalPath = normalizePublicRoute(url.pathname);
+    if (isCanonicalPublicRoute(canonicalPath)) {
+      const documentPath = canonicalPath === "/" ? "/index.html" : `${canonicalPath}/index.html`;
+      return env.ASSETS.fetch(assetRequest(request, documentPath));
+    }
+    return notFoundResponse(request, env);
   },
 };

@@ -1,6 +1,7 @@
 /** Design philosophy: Field Notes Utility — factual page metadata with no unsupported product claims. */
 
 import { useEffect } from "react";
+import { formatPageTitle } from "@/lib/initialDocument";
 import { SITE_URL, siteConfig } from "@/lib/site";
 import type { StructuredData } from "@/lib/seo";
 
@@ -24,7 +25,7 @@ function setSchema(schema?: StructuredData) {
 
 export function usePageMeta({ title, description, path = "/", schema }: PageMeta) {
   useEffect(() => {
-    const fullTitle = title === siteConfig.name ? title : `${title} | ${siteConfig.name}`;
+    const fullTitle = formatPageTitle(title);
     const canonicalUrl = `${SITE_URL}${path === "/" ? "" : path}`;
     document.title = fullTitle;
     setMeta("name", "description", description);

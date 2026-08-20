@@ -36,6 +36,30 @@ describe("account deletion service", () => {
     expect(assets.fetch).not.toHaveBeenCalled();
   });
 
+  it("serves declared public documents from their prerendered route asset rather than the generic SPA shell", async () => {
+    const assets = { fetch: vi.fn().mockResolvedValue(new Response("route document", { status: 200, headers: { "Content-Type": "text/html" } })) };
+    const response = await worker.fetch(new Request("https://mrcopy.pro/features/link-previews?ref=p7"), { ASSETS: assets, FIREBASE_SERVICE_ACCOUNT: "unused" });
+    expect(response.status).toBe(200);
+    expect(new URL(assets.fetch.mock.calls[0][0].url).pathname).toBe("/features/link-previews/index.html");
+  });
+
+  it("returns a genuine noindex HTTP 404 document for an unknown public route", async () => {
+    const assets = { fetch: vi.fn().mockResolvedValue(new Response("not found document", { status: 200, headers: { "Content-Type": "text/html" } })) };
+    const response = await worker.fetch(new Request("https://mrcopy.pro/does-not-exist"), { ASSETS: assets, FIREBASE_SERVICE_ACCOUNT: "unused" });
+    expect(response.status).toBe(404);
+    expect(response.headers.get("X-Robots-Tag")).toBe("noindex");
+    expect(new URL(assets.fetch.mock.calls[0][0].url).pathname).toBe("/404/index.html");
+  });
+
+  it("keeps static assets and unknown API paths outside document-route handling", async () => {
+    const assets = { fetch: vi.fn().mockResolvedValue(new Response("asset", { status: 200 })) };
+    const assetResponse = await worker.fetch(new Request("https://mrcopy.pro/assets/index.js"), { ASSETS: assets, FIREBASE_SERVICE_ACCOUNT: "unused" });
+    const apiResponse = await worker.fetch(new Request("https://mrcopy.pro/api/unknown"), { ASSETS: assets, FIREBASE_SERVICE_ACCOUNT: "unused" });
+    expect(assetResponse.status).toBe(200);
+    expect(assets.fetch).toHaveBeenCalledTimes(1);
+    expect(apiResponse.status).toBe(404);
+  });
+
   it("uses only the UID returned by verified-token processing for Firestore and Authentication deletion", async () => {
     const fetcher = vi.fn()
       .mockResolvedValueOnce(new Response(JSON.stringify({ name: "users/verified-user" }), { status: 200 }))

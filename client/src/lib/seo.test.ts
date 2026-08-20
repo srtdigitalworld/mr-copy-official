@@ -1,8 +1,10 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { p0Schemas, p1Schemas, p2Schemas, p3Schemas, p4Schemas, p5Schemas } from "./seo";
+import { initialDocuments } from "./initialDocument";
 import { linkPreviewsFaqItems, siteFaqItems } from "./faq";
 import { SITE_URL, siteConfig } from "./site";
+import { canonicalPublicRoutes } from "@shared/publicRoutes";
 
 const source = (relativePath: string) => readFileSync(new URL(relativePath, import.meta.url), "utf8");
 const home = source("../pages/Home.tsx");
@@ -24,6 +26,7 @@ const site = source("./site.ts");
 const routes = source("../App.tsx");
 const staticHtml = source("../../index.html");
 const sitemap = source("../../public/sitemap.xml");
+const wrangler = source("../../../wrangler.jsonc");
 
 describe("P0 semantic SEO implementation", () => {
   it("uses the canonical production host in static metadata and route schema", () => {
@@ -371,5 +374,35 @@ describe("P5 existing-page semantic optimization", () => {
     const sourceText = `${home}\n${clipboardManager}\n${privacy}\n${terms}\n${contact}`.toLowerCase();
     expect(home).toContain("not cloud clipboard synchronization");
     for (const blockedClaim of ["₹49", "free trial", "instagram downloader", "youtube downloader", "facebook scraper", "private-account extraction", "guaranteed security", "ios support", "desktop support"]) expect(sourceText).not.toContain(blockedClaim);
+  });
+});
+
+describe("P7 initial-document route parity", () => {
+  it("maps every and only canonical public route to a unique initial document with a route-specific H1 and visible-content schema", () => {
+    expect(initialDocuments.map((document) => document.path)).toEqual(canonicalPublicRoutes);
+    expect(new Set(initialDocuments.map((document) => document.title)).size).toBe(initialDocuments.length);
+    for (const document of initialDocuments) {
+      expect(document.h1).not.toHaveLength(0);
+      expect(document.description).not.toHaveLength(0);
+      expect(JSON.stringify(document.schema)).toContain('"WebPage"');
+    }
+  });
+
+  it("uses an absolute official Open Graph image and a single initial-document head replacement marker", () => {
+    expect(staticHtml).toContain('content="https://mrcopy.pro/manus-storage/mr_copy_app_icon_256_f8bbff73.webp"');
+    expect(staticHtml.match(/initial-document-head:start/g)).toHaveLength(1);
+    expect(staticHtml.match(/initial-document-head:end/g)).toHaveLength(1);
+  });
+
+  it("keeps all P7 initial-document records inside the established claims and commercial firewall", () => {
+    const initialCopy = JSON.stringify(initialDocuments).toLowerCase();
+    for (const blockedClaim of ["₹49", "instagram downloader", "youtube downloader", "facebook scraper", "cloud clipboard synchronization", "aggregaterating", "\"offers\""]) {
+      expect(initialCopy).not.toContain(blockedClaim);
+    }
+  });
+
+  it("keeps Worker-first assets under explicit route control with a genuine static 404 fallback", () => {
+    expect(wrangler).toContain('"not_found_handling": "404-page"');
+    expect(wrangler).toContain('"run_worker_first": true');
   });
 });
