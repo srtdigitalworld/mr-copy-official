@@ -133,3 +133,16 @@
 - [x] Obtain the actual Product Intelligence Report or equivalent verified Android-code evidence required as the factual source of truth.
 - [x] Build the product semantic model, entity graph, intent maps, and claims/limitations firewall from verified evidence only.
 - [x] Produce the complete Semantic SEO Website Blueprint, including information architecture, page specifications, metadata, schema, internal links, roadmap, and developer handoff.
+
+## P0 Semantic SEO Implementation
+
+- [x] Map the approved P0 homepage, features, privacy, pricing-audit, metadata, canonical, schema, and internal-link requirements to existing components without creating P1 pages.
+- [x] Implement P0 homepage content and metadata improvements using only verified clipboard-management, link-organization, floating-access, and local-data-boundary claims.
+- [x] Implement the P0 feature hierarchy and feature-page metadata without creating separate P1 feature routes.
+- [x] Align the existing Privacy page with the verified local-data, cloud-profile, external-metadata-request, and account-deletion boundaries without altering legal meaning.
+- [x] Audit Pricing content and withhold unconfirmed price, trial, date, and entitlement-benefit claims.
+- [x] Add accurate visible-content-backed structured data, page-specific canonical metadata, and approved internal links for P0 pages.
+- [x] Add and run regression tests for P0 SEO metadata, schema, links, claims boundaries, build, responsive rendering, and accessibility.
+- [x] Deliver the P0 completion report and stop for approval before P1 routes or topical pages.
+- [x] Remove or correct the unsupported website-analytics statement in the Privacy page using only verified implementation evidence.
+- [x] Add and verify the approved existing-route `/pricing` to `/privacy` internal link about account and entitlement data handling.

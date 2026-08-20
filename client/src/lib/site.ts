@@ -14,13 +14,6 @@ export const siteConfig = {
     instagramHandle: "@mrcopy.pro",
     instagramUrl: "https://www.instagram.com/mrcopy.pro",
   },
-  pricing: {
-    trial: "3-Day Free Trial",
-    amount: "₹49",
-    period: "per billing period",
-    availableFrom: "August 29, 2026",
-    productId: "mr_copy_basic_subscription",
-  },
 };
 
 export const navItems = [
@@ -39,9 +32,8 @@ export const footerLinks = [
   { href: "/contact", label: "Contact" },
 ];
 
-export const supportedPlatforms = [
-  "YouTube", "TikTok", "Instagram", "Facebook", "Reddit", "Spotify", "Google Maps", "Amazon India", "Flipkart", "Myntra", "Meesho", "Nykaa", "Tata Cliq", "JioMart", "Shopsy", "Ajio",
-];
+export const supportedPublicPlatforms = ["YouTube", "Instagram", "Facebook", "Google Maps"];
+export const supportedShoppingPlatforms = ["Amazon India", "Flipkart", "Myntra", "Meesho", "Nykaa", "TataCliq", "JioMart", "Shopsy"];
 
 export const appIconAsset = "/manus-storage/mr_copy_app_icon_256_f8bbff73.webp";
 export const floatingIconAsset = "/manus-storage/mr_copy_floating_icon_256_664f6c2c.webp";
