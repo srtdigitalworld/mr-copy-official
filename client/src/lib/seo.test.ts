@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { p0Schemas } from "./seo";
+import { p0Schemas, p1Schemas } from "./seo";
 import { SITE_URL, siteConfig } from "./site";
 
 const source = (relativePath: string) => readFileSync(new URL(relativePath, import.meta.url), "utf8");
@@ -8,7 +8,11 @@ const home = source("../pages/Home.tsx");
 const features = source("../pages/Features.tsx");
 const privacy = source("../pages/Privacy.tsx");
 const pricing = source("../pages/Pricing.tsx");
+const clipboardManager = source("../pages/ClipboardManager.tsx");
+const floatingBubble = source("../pages/FloatingBubble.tsx");
+const routes = source("../App.tsx");
 const staticHtml = source("../../index.html");
+const sitemap = source("../../public/sitemap.xml");
 
 describe("P0 semantic SEO implementation", () => {
   it("uses the canonical production host in static metadata and route schema", () => {
@@ -53,5 +57,61 @@ describe("P0 semantic SEO implementation", () => {
     expect(p0Source).not.toContain("facebook scraper");
     expect(p0Source).not.toContain("youtube downloader");
     expect(p0Source).not.toContain("multi-device clipboard synchronization");
+  });
+});
+
+describe("P1 Clipboard Manager and Floating Bubble pages", () => {
+  it("registers only the approved P1 routes and includes their canonical sitemap URLs", () => {
+    expect(routes).toContain('path="/features/clipboard-manager"');
+    expect(routes).toContain('path="/features/floating-bubble"');
+    expect(routes).not.toContain('path="/features/link-previews"');
+    expect(routes).not.toContain('path="/features/privacy-security"');
+    for (const deferredP2Route of ["/use-cases/shopping-links", "/help/floating-bubble-permission", "/help/android-clipboard-access", "/faq"]) {
+      expect(routes).not.toContain(deferredP2Route);
+      expect(sitemap).not.toContain(`https://mrcopy.pro${deferredP2Route}`);
+    }
+    expect(sitemap).toContain("https://mrcopy.pro/features/clipboard-manager");
+    expect(sitemap).toContain("https://mrcopy.pro/features/floating-bubble");
+    expect(sitemap).not.toContain("mrcopy.app");
+  });
+
+  it("provides unique P1 metadata and visible breadcrumbs that agree with route schema", () => {
+    expect(clipboardManager).toContain('title: "Android Clipboard Manager for Saved Text & Links"');
+    expect(floatingBubble).toContain('title: "Floating Clipboard Bubble for Android"');
+    expect(clipboardManager).toContain('href="/features"');
+    expect(floatingBubble).toContain('href="/features"');
+    const clipboardSchema = JSON.stringify(p1Schemas.clipboardManager);
+    const bubbleSchema = JSON.stringify(p1Schemas.floatingBubble);
+    expect(clipboardSchema).toContain('"BreadcrumbList"');
+    expect(clipboardSchema).toContain("https://mrcopy.pro/features/clipboard-manager");
+    expect(bubbleSchema).toContain('"BreadcrumbList"');
+    expect(bubbleSchema).toContain("https://mrcopy.pro/features/floating-bubble");
+  });
+
+  it("covers the verified Clipboard Manager workflow and limits without unsupported history claims", () => {
+    expect(clipboardManager).toContain("Save and organize copied text on Android");
+    expect(clipboardManager).toContain("500 clips");
+    expect(clipboardManager).toContain("five items");
+    expect(clipboardManager).toContain("30-day cleanup period");
+    expect(clipboardManager).toContain("text and URLs");
+    expect(clipboardManager).toContain('href="/features/floating-bubble"');
+    expect(clipboardManager).toContain('href="/privacy"');
+  });
+
+  it("covers the verified Floating Bubble workflow and permission boundary", () => {
+    expect(floatingBubble).toContain("Copy saved text without leaving the app you are using");
+    expect(floatingBubble).toContain("Recent and Starred");
+    expect(floatingBubble).toContain("Display over other apps");
+    expect(floatingBubble).toContain("Android 13 and later");
+    expect(floatingBubble).toContain("does not bypass Android privacy protections");
+    expect(floatingBubble).toContain('href="/features/clipboard-manager"');
+    expect(floatingBubble).toContain('href="/privacy"');
+  });
+
+  it("keeps P1 pages outside unsupported platform, capture, synchronization, and downloader positioning", () => {
+    const p1Source = `${clipboardManager}\n${floatingBubble}`.toLowerCase();
+    for (const blockedClaim of ["ios", "desktop support", "cloud sync", "multi-device", "instagram downloader", "youtube downloader", "facebook scraper", "image capture", "file capture", "unlimited history", "uninterrupted background clipboard access"]) {
+      expect(p1Source).not.toContain(blockedClaim);
+    }
   });
 });
