@@ -46,11 +46,14 @@ function applyDocument(templateHtml, document, body) {
   return withHead.replace('<div id="root"></div>', `<div id="root" data-initial-route="${document.path}">${body}</div>`);
 }
 
+function documentAssetPath(pathname) {
+  const name = pathname === "/" ? "home" : pathname.slice(1).replaceAll("/", "__");
+  return path.join(publicDir, "_documents", `${name}.html`);
+}
+
 for (const document of initialDocuments) {
   const body = renderRoute(document.path);
-  const outputPath = document.path === "/"
-    ? path.join(publicDir, "index.html")
-    : path.join(publicDir, document.path.slice(1), "index.html");
+  const outputPath = documentAssetPath(document.path);
   await mkdir(path.dirname(outputPath), { recursive: true });
   await writeFile(outputPath, applyDocument(template, document, body), "utf8");
 }
@@ -70,5 +73,5 @@ const notFoundTemplate = template.replace(
   notFoundHead,
 );
 const notFoundHtml = notFoundTemplate.replace('<div id="root"></div>', `<div id="root" data-initial-route="/404">${renderRoute("/404")}</div>`);
-await mkdir(path.join(publicDir, "404"), { recursive: true });
-await writeFile(path.join(publicDir, "404", "index.html"), notFoundHtml, "utf8");
+await mkdir(path.join(publicDir, "_documents"), { recursive: true });
+await writeFile(path.join(publicDir, "_documents", "not-found.html"), notFoundHtml, "utf8");

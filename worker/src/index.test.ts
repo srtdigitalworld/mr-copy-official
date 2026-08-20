@@ -40,7 +40,7 @@ describe("account deletion service", () => {
     const assets = { fetch: vi.fn().mockResolvedValue(new Response("route document", { status: 200, headers: { "Content-Type": "text/html" } })) };
     const response = await worker.fetch(new Request("https://mrcopy.pro/features/link-previews?ref=p7"), { ASSETS: assets, FIREBASE_SERVICE_ACCOUNT: "unused" });
     expect(response.status).toBe(200);
-    expect(new URL(assets.fetch.mock.calls[0][0].url).pathname).toBe("/features/link-previews/index.html");
+    expect(new URL(assets.fetch.mock.calls[0][0].url).pathname).toBe("/_documents/features__link-previews.html");
   });
 
   it("returns a genuine noindex HTTP 404 document for an unknown public route", async () => {
@@ -48,7 +48,7 @@ describe("account deletion service", () => {
     const response = await worker.fetch(new Request("https://mrcopy.pro/does-not-exist"), { ASSETS: assets, FIREBASE_SERVICE_ACCOUNT: "unused" });
     expect(response.status).toBe(404);
     expect(response.headers.get("X-Robots-Tag")).toBe("noindex");
-    expect(new URL(assets.fetch.mock.calls[0][0].url).pathname).toBe("/404/index.html");
+    expect(new URL(assets.fetch.mock.calls[0][0].url).pathname).toBe("/_documents/not-found.html");
   });
 
   it("keeps static assets and unknown API paths outside document-route handling", async () => {

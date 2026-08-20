@@ -32,8 +32,13 @@ function assetRequest(request: Request, path: string): Request {
   return new Request(url.toString(), request);
 }
 
+function documentAssetPath(pathname: string): string {
+  const name = pathname === "/" ? "home" : pathname.slice(1).replaceAll("/", "__");
+  return `/_documents/${name}.html`;
+}
+
 async function notFoundResponse(request: Request, env: Env): Promise<Response> {
-  const asset = await env.ASSETS.fetch(assetRequest(request, "/404/index.html"));
+  const asset = await env.ASSETS.fetch(assetRequest(request, "/_documents/not-found.html"));
   const headers = new Headers(asset.headers);
   headers.set("Content-Type", "text/html; charset=UTF-8");
   headers.set("X-Robots-Tag", "noindex");
@@ -89,8 +94,7 @@ export default {
 
     const canonicalPath = normalizePublicRoute(url.pathname);
     if (isCanonicalPublicRoute(canonicalPath)) {
-      const documentPath = canonicalPath === "/" ? "/index.html" : `${canonicalPath}/index.html`;
-      return env.ASSETS.fetch(assetRequest(request, documentPath));
+      return env.ASSETS.fetch(assetRequest(request, documentAssetPath(canonicalPath)));
     }
     return notFoundResponse(request, env);
   },

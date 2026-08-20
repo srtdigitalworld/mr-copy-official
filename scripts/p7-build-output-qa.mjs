@@ -12,7 +12,8 @@ function escapeHtml(value) {
 }
 
 function routeFile(pathname) {
-  return pathname === "/" ? path.join(publicDir, "index.html") : path.join(publicDir, pathname.slice(1), "index.html");
+  const name = pathname === "/" ? "home" : pathname.slice(1).replaceAll("/", "__");
+  return path.join(publicDir, "_documents", `${name}.html`);
 }
 
 function count(value, search) {
@@ -39,7 +40,7 @@ for (const document of initialDocuments) {
   if (html.includes("route-loading")) throw new Error(`${document.path} includes the client loading fallback in initial HTML`);
 }
 
-const notFound = await readFile(path.join(publicDir, "404", "index.html"), "utf8");
+const notFound = await readFile(path.join(publicDir, "_documents", "not-found.html"), "utf8");
 if (!notFound.includes('<meta name="robots" content="noindex" />')) throw new Error("404 document is missing noindex metadata");
 if (!notFound.includes("That reference is not here.")) throw new Error("404 document is missing the user-facing recovery content");
 
