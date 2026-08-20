@@ -10,6 +10,8 @@ import Home from "./pages/Home";
 const Features = lazy(() => import("./pages/Features"));
 const ClipboardManager = lazy(() => import("./pages/ClipboardManager"));
 const FloatingBubble = lazy(() => import("./pages/FloatingBubble"));
+const LinkPreviews = lazy(() => import("./pages/LinkPreviews"));
+const PrivacySecurity = lazy(() => import("./pages/PrivacySecurity"));
 const Pricing = lazy(() => import("./pages/Pricing"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const Terms = lazy(() => import("./pages/Terms"));
@@ -18,7 +20,7 @@ const Contact = lazy(() => import("./pages/Contact"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 function Router() {
   // make sure to consider if you need authentication for certain routes
-  return <Suspense fallback={<div className="route-loading" aria-hidden="true" />}><Switch><Route path="/" component={Home} /><Route path="/features" component={Features} /><Route path="/features/clipboard-manager" component={ClipboardManager} /><Route path="/features/floating-bubble" component={FloatingBubble} /><Route path="/pricing" component={Pricing} /><Route path="/privacy" component={Privacy} /><Route path="/terms" component={Terms} /><Route path="/delete-account" component={DeleteAccount} /><Route path="/contact" component={Contact} /><Route component={NotFound} /></Switch></Suspense>;
+  return <Suspense fallback={<div className="route-loading" aria-hidden="true" />}><Switch><Route path="/" component={Home} /><Route path="/features" component={Features} /><Route path="/features/clipboard-manager" component={ClipboardManager} /><Route path="/features/floating-bubble" component={FloatingBubble} /><Route path="/features/link-previews" component={LinkPreviews} /><Route path="/features/privacy-security" component={PrivacySecurity} /><Route path="/pricing" component={Pricing} /><Route path="/privacy" component={Privacy} /><Route path="/terms" component={Terms} /><Route path="/delete-account" component={DeleteAccount} /><Route path="/contact" component={Contact} /><Route component={NotFound} /></Switch></Suspense>;
 }
 
 export default function App() {

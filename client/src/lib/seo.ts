@@ -104,3 +104,18 @@ export const p1Schemas = {
     "/features/floating-bubble",
   ),
 } as const;
+
+export const p2Schemas = {
+  linkPreviews: nestedFeatureSchema(
+    "Link Previews",
+    "Save Links with Previews on Android",
+    "Organize public links with available titles, descriptions, images, and platform details in Mr. Copy.",
+    "/features/link-previews",
+  ),
+  privacySecurity: nestedFeatureSchema(
+    "Privacy & Security",
+    "Local Encrypted Clipboard Storage for Android",
+    "Learn how Mr. Copy keeps saved clips local with encrypted storage and clear account-data boundaries.",
+    "/features/privacy-security",
+  ),
+} as const;

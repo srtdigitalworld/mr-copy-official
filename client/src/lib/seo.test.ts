@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { p0Schemas, p1Schemas } from "./seo";
+import { p0Schemas, p1Schemas, p2Schemas } from "./seo";
 import { SITE_URL, siteConfig } from "./site";
 
 const source = (relativePath: string) => readFileSync(new URL(relativePath, import.meta.url), "utf8");
@@ -10,6 +10,8 @@ const privacy = source("../pages/Privacy.tsx");
 const pricing = source("../pages/Pricing.tsx");
 const clipboardManager = source("../pages/ClipboardManager.tsx");
 const floatingBubble = source("../pages/FloatingBubble.tsx");
+const linkPreviews = source("../pages/LinkPreviews.tsx");
+const privacySecurity = source("../pages/PrivacySecurity.tsx");
 const routes = source("../App.tsx");
 const staticHtml = source("../../index.html");
 const sitemap = source("../../public/sitemap.xml");
@@ -64,8 +66,6 @@ describe("P1 Clipboard Manager and Floating Bubble pages", () => {
   it("registers only the approved P1 routes and includes their canonical sitemap URLs", () => {
     expect(routes).toContain('path="/features/clipboard-manager"');
     expect(routes).toContain('path="/features/floating-bubble"');
-    expect(routes).not.toContain('path="/features/link-previews"');
-    expect(routes).not.toContain('path="/features/privacy-security"');
     for (const deferredP2Route of ["/use-cases/shopping-links", "/help/floating-bubble-permission", "/help/android-clipboard-access", "/faq"]) {
       expect(routes).not.toContain(deferredP2Route);
       expect(sitemap).not.toContain(`https://mrcopy.pro${deferredP2Route}`);
@@ -113,5 +113,58 @@ describe("P1 Clipboard Manager and Floating Bubble pages", () => {
     for (const blockedClaim of ["ios", "desktop support", "cloud sync", "multi-device", "instagram downloader", "youtube downloader", "facebook scraper", "image capture", "file capture", "unlimited history", "uninterrupted background clipboard access"]) {
       expect(p1Source).not.toContain(blockedClaim);
     }
+  });
+});
+
+describe("P2 consolidated Link Previews and Privacy & Security pages", () => {
+  it("registers the two substantive P2 routes, includes them in the sitemap, and rejects thin route variations", () => {
+    for (const route of ["/features/link-previews", "/features/privacy-security"]) {
+      expect(routes).toContain(`path="${route}"`);
+      expect(sitemap).toContain(`https://mrcopy.pro${route}`);
+    }
+    for (const thinRoute of ["/features/youtube-extractor", "/features/instagram-extractor", "/features/facebook-extractor", "/features/google-maps-parser", "/features/shopping-link-parser", "/use-cases/shopping-links"]) {
+      expect(routes).not.toContain(thinRoute);
+      expect(sitemap).not.toContain(`https://mrcopy.pro${thinRoute}`);
+    }
+  });
+
+  it("provides unique P2 metadata and visible-breadcrumb-aligned route schema", () => {
+    expect(linkPreviews).toContain('title: "Save Links with Previews on Android"');
+    expect(privacySecurity).toContain('title: "Local Encrypted Clipboard Storage for Android"');
+    expect(linkPreviews).toContain('href="/features"');
+    expect(privacySecurity).toContain('href="/features"');
+    const linkSchema = JSON.stringify(p2Schemas.linkPreviews);
+    const privacySchema = JSON.stringify(p2Schemas.privacySecurity);
+    expect(linkSchema).toContain('"BreadcrumbList"');
+    expect(linkSchema).toContain("https://mrcopy.pro/features/link-previews");
+    expect(privacySchema).toContain('"BreadcrumbList"');
+    expect(privacySchema).toContain("https://mrcopy.pro/features/privacy-security");
+  });
+
+  it("covers verified public-link, social, Maps, and shopping-reference boundaries on one substantive page", () => {
+    expect(linkPreviews).toContain("Turn saved links into useful Android references");
+    expect(linkPreviews).toContain("includes verified handling for public YouTube, Instagram, and Facebook links");
+    expect(linkPreviews).toContain("place names, coordinates, Place IDs, and route information");
+    expect(linkPreviews).toContain("supportedShoppingPlatforms.map");
+    expect(linkPreviews).toContain("Private accounts, private groups, login-required pages, rate limits, and blocked pages can produce partial or fallback results");
+    expect(linkPreviews).toContain('href="/features/clipboard-manager"');
+    expect(linkPreviews).toContain('href="/features/privacy-security"');
+  });
+
+  it("covers the verified local-first and account-data boundary without security guarantees", () => {
+    expect(privacySecurity).toContain("Keep saved clipboard content local to your Android device");
+    expect(privacySecurity).toContain("AES-256 GCM encryption");
+    expect(privacySecurity).toContain("Android Keystore-backed storage");
+    expect(privacySecurity).toContain("not a cloud clipboard");
+    expect(privacySecurity).toContain('href="/features/link-previews"');
+    expect(privacySecurity).toContain('href="/delete-account"');
+  });
+
+  it("keeps P2 pages outside unsupported privacy, platform, downloader, and price positioning", () => {
+    const p2Source = `${linkPreviews}\n${privacySecurity}`.toLowerCase();
+    for (const blockedClaim of ["ios support", "desktop support", "cloud clipboard synchronization", "private-account extraction", "private social-account extraction", "instagram downloader", "youtube downloader", "facebook scraper", "headless browser", "military-grade", "guaranteed current price", "free trial", "₹49"]) {
+      expect(p2Source).not.toContain(blockedClaim);
+    }
+    expect(privacySecurity).toContain("does not claim to be unhackable");
   });
 });

@@ -168,3 +168,13 @@
 - [x] Deliver the detailed P1 implementation report and stop before P2 pending explicit approval.
 - [x] Run and record explicit accessibility verification for both P1 pages, including heading order, descriptive links, image alt text, and keyboard/focus behavior.
 - [x] Verify the detailed P1 implementation report exists and covers files, pages, entities, internal links, metadata/schema, tests, build, responsive results, unresolved items, P2 recommendations, and the P2 stop condition.
+
+## P2 Semantic SEO Feature Ecosystem
+
+- [x] Consolidate the approved URL preview, supported social/public-link, Google Maps, and shopping-link topics into substantive verified routes without thin keyword-variation pages.
+- [x] Map P2 entities, intents, attributes, semantic relationships, questions, evidence boundaries, and existing-route internal links from the Product Intelligence Report and Blueprint.
+- [x] Implement the substantive URL Preview and supported public-link feature page with verified YouTube, Instagram, Facebook, Google Maps, and shopping-reference boundaries.
+- [x] Implement the substantive Local-First Privacy and Security feature page with verified encrypted storage, Android Keystore, local-content/account-data boundary, and no-security-guarantee language.
+- [x] Update only necessary shared P0/P1 feature-hub links, sitemap entries, route schemas, and regression coverage; preserve existing P0/P1 content unless a verified issue requires a correction.
+- [ ] Run P2 production QA for routes, internal links, metadata, canonical, Open Graph, JSON-LD, sitemap, robots, indexability, desktop/tablet/mobile layout, keyboard accessibility, tests, TypeScript, build, console state, and claims firewall.
+- [ ] Deliver the detailed P2 implementation report and stop before P3 pending explicit approval.
