@@ -25,6 +25,7 @@ export const navItems = [
 
 export const footerLinks = [
   { href: "/features", label: "Features" },
+  { href: "/faq", label: "FAQ" },
   { href: "/pricing", label: "Pricing" },
   { href: "/privacy", label: "Privacy" },
   { href: "/terms", label: "Terms" },

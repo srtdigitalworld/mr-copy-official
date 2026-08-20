@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { p0Schemas, p1Schemas, p2Schemas, p3Schemas, p4Schemas } from "./seo";
+import { p0Schemas, p1Schemas, p2Schemas, p3Schemas, p4Schemas, p5Schemas } from "./seo";
 import { linkPreviewsFaqItems, siteFaqItems } from "./faq";
 import { SITE_URL, siteConfig } from "./site";
 
@@ -17,6 +17,10 @@ const shoppingLinks = source("../pages/ShoppingLinks.tsx");
 const floatingBubblePermission = source("../pages/FloatingBubblePermission.tsx");
 const androidClipboardAccess = source("../pages/AndroidClipboardAccess.tsx");
 const faq = source("../pages/FAQ.tsx");
+const terms = source("../pages/Terms.tsx");
+const contact = source("../pages/Contact.tsx");
+const deleteAccount = source("../pages/DeleteAccount.tsx");
+const site = source("./site.ts");
 const routes = source("../App.tsx");
 const staticHtml = source("../../index.html");
 const sitemap = source("../../public/sitemap.xml");
@@ -327,5 +331,44 @@ describe("P4.2 Link Previews FAQ content", () => {
   it("keeps P4.2 outside unlimited-source, scraping, private-account, downloader, and cloud-sync positioning", () => {
     const sourceText = `${linkPreviews}\n${JSON.stringify(linkPreviewsFaqItems)}`.toLowerCase();
     for (const blockedClaim of ["every website", "unrestricted web scraping", "private-account extraction", "instagram downloader", "youtube downloader", "facebook scraper", "cloud clipboard synchronization"]) expect(sourceText).not.toContain(blockedClaim);
+  });
+});
+
+describe("P5 existing-page semantic optimization", () => {
+  it("strengthens parent-to-child and core-workflow relationships only with existing contextual destinations", () => {
+    expect(home).toContain('href: "/features/floating-bubble"');
+    expect(home).toContain('href="/features/link-previews"');
+    expect(home).toContain('href="/features/privacy-security"');
+    expect(clipboardManager).toContain('href="/help/android-clipboard-access"');
+    expect(privacy).toContain('href="/features/privacy-security"');
+    expect(privacy).toContain('href="/features/link-previews"');
+    expect(site).toContain('{ href: "/faq", label: "FAQ" }');
+  });
+
+  it("makes Terms and Contact match the verified support, billing-boundary, and deletion-flow state", () => {
+    expect(terms).toContain('href="/contact"');
+    expect(terms).toContain('href="/pricing"');
+    expect(terms).toContain("If Google Play billing applies to an account");
+    expect(terms).not.toContain("Current paid access is offered");
+    expect(terms).not.toContain("should be configured before production publishing");
+    expect(contact).toContain("secure account-deletion flow");
+    expect(contact).toContain("matching Firebase account and Firestore account record");
+    expect(deleteAccount).toContain("schema: p5Schemas.deleteAccount");
+  });
+
+  it("extends WebPage schema consistently to the existing Terms, Contact, and Delete Account pages without invented breadcrumbs or FAQ data", () => {
+    for (const schema of [p5Schemas.terms, p5Schemas.contact, p5Schemas.deleteAccount]) {
+      const serialized = JSON.stringify(schema);
+      expect(serialized).toContain('"WebPage"');
+      expect(serialized).toContain("https://mrcopy.pro");
+      expect(serialized).not.toContain('"BreadcrumbList"');
+      expect(serialized).not.toContain('"FAQPage"');
+    }
+  });
+
+  it("retains the P5 commercial, platform, privacy, and downloader claims firewall", () => {
+    const sourceText = `${home}\n${clipboardManager}\n${privacy}\n${terms}\n${contact}`.toLowerCase();
+    expect(home).toContain("not cloud clipboard synchronization");
+    for (const blockedClaim of ["₹49", "free trial", "instagram downloader", "youtube downloader", "facebook scraper", "private-account extraction", "guaranteed security", "ios support", "desktop support"]) expect(sourceText).not.toContain(blockedClaim);
   });
 });

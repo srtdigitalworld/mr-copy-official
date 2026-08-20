@@ -203,3 +203,30 @@ export const p4Schemas = {
     faqPageSchema(siteFaqItems),
   ] as const,
 } as const;
+
+export const p5Schemas = {
+  terms: {
+    ...webPageSchema(
+      "Terms of Use",
+      "Read the Mr. Copy service terms covering acceptable use, third-party references, subscriptions, account responsibilities, and limitations.",
+      "/terms",
+    ),
+    about: { "@id": applicationId },
+  },
+  contact: {
+    ...webPageSchema(
+      "Contact",
+      "Official Mr. Copy developer and support contact information.",
+      "/contact",
+    ),
+    about: { "@id": applicationId },
+  },
+  deleteAccount: {
+    ...webPageSchema(
+      "Delete Account",
+      "Securely delete a Mr. Copy Firebase account after Google authentication, while keeping local clipboard data and Google Play subscriptions separate.",
+      "/delete-account",
+    ),
+    about: { "@id": applicationId },
+  },
+} as const;

@@ -5,9 +5,10 @@ import { CheckCircle2, Info, ShieldAlert } from "lucide-react";
 import { getDeletionAuth, signInForAccountDeletion, signOutOfDeletionFlow } from "@/lib/firebase";
 import { deletionErrorMessage } from "@/lib/deleteAccountErrors";
 import { usePageMeta } from "@/hooks/usePageMeta";
+import { p5Schemas } from "@/lib/seo";
 
 export default function DeleteAccount() {
-  usePageMeta({ title: "Delete Account", description: "Securely delete a Mr. Copy Firebase account after Google authentication, while keeping local clipboard data and Google Play subscriptions separate.", path: "/delete-account" });
+  usePageMeta({ title: "Delete Account", description: "Securely delete a Mr. Copy Firebase account after Google authentication, while keeping local clipboard data and Google Play subscriptions separate.", path: "/delete-account", schema: p5Schemas.deleteAccount });
   const [email, setEmail] = useState<string | null>(null);
   const [confirmed, setConfirmed] = useState(false);
   const [state, setState] = useState<"idle" | "signing-in" | "ready" | "deleting" | "success">("idle");

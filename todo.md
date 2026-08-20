@@ -197,3 +197,11 @@
 - [x] Implement P4.2 as a substantive Link Previews FAQ section covering only verified URL-preview workflow, available metadata, fallback, local-storage, public-request, and Clipboard Manager relationship questions, with contextual links and regression coverage.
 - [x] Run P4 production QA for all FAQ content and routes: claims evidence, internal links, metadata, canonical, Open Graph, JSON-LD parity with visible FAQs, sitemap, robots, indexability, desktop/tablet/mobile layout, keyboard accessibility, tests, TypeScript, build, console/network state, and no thin-keyword pages.
 - [x] Deliver the detailed P4 report and stop before P5 pending explicit approval.
+
+## P5 Semantic SEO Optimization and Topical Authority
+
+- [x] Audit all live P0–P4 routes for primary/supporting entities, search intent, IQQI/K2Q coverage, metadata, H1, schema, breadcrumbs, indexability, internal links, content depth, terminology consistency, duplication, and orphan or weakly connected pages without making site changes first.
+- [x] Produce the evidence-bound P5 semantic map, entity coverage audit, intent-gap analysis, internal-link map, content-consolidation findings, and a prioritized existing-page-only recommendation set; exclude unsupported or low-information proposals.
+- [x] Implement only the audit-proven, evidence-backed P5 existing-page improvements to entity relationships, contextual links, content depth, metadata, and structured-data consistency; do not create new pages, delete or redirect routes, or publish commercial claims.
+- [ ] Run P5 production QA for every modified route and shared SEO artifact: claims evidence, internal links, metadata, canonical, Open Graph, JSON-LD, sitemap, robots, indexability, desktop/tablet/mobile layout, keyboard accessibility, tests, TypeScript, build, console/network state, and no mass-page expansion.
+- [ ] Deliver the detailed P5 audit and optimization report and stop before P6 pending explicit approval.
