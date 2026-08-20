@@ -223,5 +223,5 @@
 - [x] Map the 15 canonical routes to their approved initial-response title, description, canonical, Open Graph, H1, and visible-content-backed JSON-LD requirements; preserve all P0–P6 content and claim boundaries.
 - [x] Implement initial server-delivered metadata and schema parity for the 15 existing canonical routes without relying on client-side execution or creating duplicate/conflicting elements after React renders.
 - [x] Implement a genuine HTTP 404 response for unknown document routes while preserving HTTP 200 for every valid route, static assets, HTTP→HTTPS redirect behavior, and `/api/account-delete`.
-- [ ] Run P7 local and production QA for all route/status/head/schema/sitemap/robots requirements, responsive design, keyboard access, console/network state, tests, TypeScript, and production build.
-- [ ] Deliver the P7 completion report and stop before P8 pending explicit owner approval.
+- [x] Run P7 local and production QA for all route/status/head/schema/sitemap/robots requirements, responsive design, keyboard access, console/network state, tests, TypeScript, and production build.
+- [x] Deliver the P7 completion report and stop before P8 pending explicit owner approval.
