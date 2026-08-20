@@ -164,5 +164,7 @@
 - [x] Update only necessary existing P0 navigation, Features links, sitemap, and shared SEO support for the two real P1 routes; do not modify unrelated pages or commercial claims.
 - [x] Add regression coverage for P1 routes, metadata, JSON-LD, links, claims boundaries, and no-P2-route constraints.
 - [x] Extend P1 regression coverage to prove deferred P2 routes are absent from routing and the sitemap.
-- [ ] Run P1 production and responsive QA across desktop, tablet, and mobile; verify routes, crawl files, schema, accessibility, tests, TypeScript, build, and console state.
-- [ ] Deliver the detailed P1 implementation report and stop before P2 pending explicit approval.
+- [x] Run P1 production and responsive QA across desktop, tablet, and mobile; verify routes, crawl files, schema, accessibility, tests, TypeScript, build, and console state.
+- [x] Deliver the detailed P1 implementation report and stop before P2 pending explicit approval.
+- [x] Run and record explicit accessibility verification for both P1 pages, including heading order, descriptive links, image alt text, and keyboard/focus behavior.
+- [x] Verify the detailed P1 implementation report exists and covers files, pages, entities, internal links, metadata/schema, tests, build, responsive results, unresolved items, P2 recommendations, and the P2 stop condition.
