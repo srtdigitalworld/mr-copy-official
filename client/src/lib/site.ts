@@ -1,6 +1,6 @@
 /** Design philosophy: Field Notes Utility — precise, calm, and native-app-adjacent content configuration. */
 
-export const SITE_URL = "https://mrcopy.app";
+export const SITE_URL = "https://mrcopy.pro";
 
 export const siteConfig = {
   name: "Mr. Copy",
