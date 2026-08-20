@@ -23,6 +23,7 @@ const terms = source("../pages/Terms.tsx");
 const contact = source("../pages/Contact.tsx");
 const deleteAccount = source("../pages/DeleteAccount.tsx");
 const site = source("./site.ts");
+const siteShell = source("../components/SiteShell.tsx");
 const routes = source("../App.tsx");
 const staticHtml = source("../../index.html");
 const sitemap = source("../../public/sitemap.xml");
@@ -405,5 +406,19 @@ describe("P7 initial-document route parity", () => {
     expect(wrangler).toContain('"not_found_handling": "404-page"');
     expect(wrangler).toContain('"html_handling": "none"');
     expect(wrangler).toContain('"run_worker_first": true');
+  });
+
+  it("keeps P9 availability, Android Share Sheet, and integrity-warning improvements inside verified boundaries", () => {
+    expect(siteConfig.playStoreUrl).toBe("");
+    expect(siteShell).toContain('href="/pricing#availability"');
+    expect(siteShell).not.toContain("window.alert");
+    expect(pricing).toContain('id="availability"');
+    expect(pricing).toContain("The official Google Play link will appear here after release details are confirmed.");
+    expect(pricing).not.toContain("Google Play link coming soon");
+    expect(linkPreviews).toContain("Share a link from another Android app");
+    expect(linkPreviews).toContain("Android Share Sheet");
+    expect(linkPreviews).toContain("Text or URL");
+    expect(privacySecurity).toContain("modified or rooted environment");
+    expect(privacySecurity).toContain("does not guarantee protection");
   });
 });

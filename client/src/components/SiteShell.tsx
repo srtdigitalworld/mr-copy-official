@@ -13,7 +13,7 @@ type SiteShellProps = { children: ReactNode };
 
 export function StoreCta({ label = "Get it on Google Play", className = "" }: { label?: string; className?: string }) {
   if (siteConfig.playStoreUrl) return <a className={`button button-primary ${className}`} href={siteConfig.playStoreUrl} target="_blank" rel="noreferrer"><span>{label}</span><ExternalLink aria-hidden="true" size={16} /></a>;
-  return <button type="button" className={`button button-primary ${className}`} onClick={() => window.alert("The official Google Play URL will be added before launch.")}><span>{label}</span><ExternalLink aria-hidden="true" size={16} /></button>;
+  return <Link className={`button button-primary ${className}`} href="/pricing#availability"><span>See availability details</span></Link>;
 }
 
 function ThemeToggle() {

@@ -236,3 +236,12 @@
 - [x] Validate the approved representative valid routes and one test-only unknown route through Google URL Inspection, including indexability, robots/noindex, canonical, rendered output/resources, and existing enhancements.
 - [x] Review Search Console sitemap, HTTPS/crawl, existing structured-data, and field Core Web Vitals reports without changing website behavior.
 - [x] Deliver an evidence-only P8 validation report with route-specific findings, no-action outcomes, and any narrow fixes requiring separate approval; stop before implementation.
+
+## P9 Remaining SEO, Content, Technical, UX, and Authority Completion
+
+- [x] Audit the complete current product, route, semantic, metadata, schema, initial-rendering, crawl, navigation, accessibility, responsive, UX, conversion, and trust baseline against verified product evidence, the blueprint, and P0–P8 reports; keep GSC-driven decisions deferred.
+- [x] Build and document the complete P9 gap matrix, entity/question map, content-information-gain assessment, internal-link graph, technical/accessibility/UX review, and evidence-based Critical/High/Medium/Low priority decisions.
+- [x] Implement only genuine Critical and High-value evidence-backed improvements, preferring existing pages and preserving all claims, architecture, deferred commercial facts, Google Play readiness, DNS, and Android boundaries.
+- [x] Prepare only non-executed legitimate off-page reference opportunities and document all deferred items; do not contact, submit, buy, or create external accounts.
+- [ ] Run full P9 regression, route/crawl/initial-HTML/schema/metadata/sitemap/robots, responsive, accessibility, console/network, TypeScript, and production-build QA.
+- [ ] Deliver the complete Remaining Work Completion Report and stop without starting a further artificial phase.
