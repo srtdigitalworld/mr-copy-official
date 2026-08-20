@@ -225,3 +225,14 @@
 - [x] Implement a genuine HTTP 404 response for unknown document routes while preserving HTTP 200 for every valid route, static assets, HTTP→HTTPS redirect behavior, and `/api/account-delete`.
 - [x] Run P7 local and production QA for all route/status/head/schema/sitemap/robots requirements, responsive design, keyboard access, console/network state, tests, TypeScript, and production build.
 - [x] Deliver the P7 completion report and stop before P8 pending explicit owner approval.
+
+## P8 Scope and Priority Planning Only
+
+- [x] Prepare a tightly prioritized planning-only P8 Scope & Priority Proposal using verified product, blueprint, P0–P7, current architecture, and only sufficiently mature real Search Console evidence if available; defer unconfirmed Play/commercial data, do not create pages for keywords, and do not implement, publish, submit, or outreach without separate approval.
+
+## P8 Read-Only Search Console and Technical Validation
+
+- [x] Record Google Search Console access and data maturity; use actual data only when available and explicitly document insufficient-history limitations without inference.
+- [x] Validate the approved representative valid routes and one test-only unknown route through Google URL Inspection, including indexability, robots/noindex, canonical, rendered output/resources, and existing enhancements.
+- [x] Review Search Console sitemap, HTTPS/crawl, existing structured-data, and field Core Web Vitals reports without changing website behavior.
+- [x] Deliver an evidence-only P8 validation report with route-specific findings, no-action outcomes, and any narrow fixes requiring separate approval; stop before implementation.
