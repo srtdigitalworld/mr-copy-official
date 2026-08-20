@@ -1,4 +1,5 @@
 import { appIconAsset, SITE_URL, siteConfig } from "./site";
+import { linkPreviewsFaqItems, siteFaqItems, type FaqItem } from "./faq";
 
 export type StructuredData = Record<string, unknown> | ReadonlyArray<Record<string, unknown>>;
 
@@ -68,6 +69,18 @@ function webPageSchema(name: string, description: string, path: string) {
   };
 }
 
+function faqPageSchema(items: readonly FaqItem[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: items.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: { "@type": "Answer", text: item.answer },
+    })),
+  } as const;
+}
+
 export const p0Schemas = {
   home: [
     {
@@ -125,12 +138,15 @@ export const p1Schemas = {
 } as const;
 
 export const p2Schemas = {
-  linkPreviews: nestedFeatureSchema(
-    "Link Previews",
-    "Save Links with Previews on Android",
-    "Organize public links with available titles, descriptions, images, and platform details in Mr. Copy.",
-    "/features/link-previews",
-  ),
+  linkPreviews: [
+    ...nestedFeatureSchema(
+      "Link Previews",
+      "Save Links with Previews on Android",
+      "Organize public links with available titles, descriptions, images, and platform details in Mr. Copy.",
+      "/features/link-previews",
+    ),
+    faqPageSchema(linkPreviewsFaqItems),
+  ] as const,
   privacySecurity: nestedFeatureSchema(
     "Privacy & Security",
     "Local Encrypted Clipboard Storage for Android",
@@ -164,4 +180,26 @@ export const p3Schemas = {
     "Learn how Android clipboard protections affect Mr. Copy and why tapping the Floating Bubble can help on Android 13 and later.",
     "/help/android-clipboard-access",
   ),
+} as const;
+
+export const p4Schemas = {
+  siteFaq: [
+    {
+      ...webPageSchema(
+        "Mr. Copy FAQ — Android Clipboard, Links & Privacy",
+        "Get evidence-backed answers about Mr. Copy’s Android clipboard management, Floating Bubble, public link previews, local storage, account data, and deletion.",
+        "/faq",
+      ),
+      about: { "@id": applicationId },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+        { "@type": "ListItem", position: 2, name: "FAQ", item: `${SITE_URL}/faq` },
+      ],
+    },
+    faqPageSchema(siteFaqItems),
+  ] as const,
 } as const;

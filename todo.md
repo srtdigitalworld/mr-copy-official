@@ -189,3 +189,11 @@
 - [x] Implement P3.3 at `/help/android-clipboard-access` with verified Android clipboard restrictions, bubble-tap behavior, user controls, contextual links, metadata, schema, sitemap entry, and regression coverage.
 - [x] Run P3 production QA for routes, internal links, metadata, canonical, Open Graph, JSON-LD, sitemap, robots, indexability, desktop/tablet/mobile layout, keyboard accessibility, tests, TypeScript, build, console/network state, and claims firewall.
 - [x] Deliver the detailed P3 report and stop before P4 pending explicit approval.
+
+## P4 Semantic SEO FAQ Layer
+
+- [x] Map P4.1 and P4.2 FAQ candidates to verified Product Intelligence evidence, existing approved pages, entities, intent, IQQI/K2Q questions, semantic relationships, contextual destinations, and claims boundaries; exclude unverified or duplicative questions.
+- [x] Implement P4.1 at `/faq` as a substantive evidence-backed FAQ route covering only verified Mr. Copy questions with visible answer content, descriptive existing-route links, metadata, valid FAQPage/WebPage/BreadcrumbList schema where eligible, sitemap entry, and regression coverage.
+- [x] Implement P4.2 as a substantive Link Previews FAQ section covering only verified URL-preview workflow, available metadata, fallback, local-storage, public-request, and Clipboard Manager relationship questions, with contextual links and regression coverage.
+- [ ] Run P4 production QA for all FAQ content and routes: claims evidence, internal links, metadata, canonical, Open Graph, JSON-LD parity with visible FAQs, sitemap, robots, indexability, desktop/tablet/mobile layout, keyboard accessibility, tests, TypeScript, build, console/network state, and no thin-keyword pages.
+- [ ] Deliver the detailed P4 report and stop before P5 pending explicit approval.

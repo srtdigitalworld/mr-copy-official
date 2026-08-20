@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { p0Schemas, p1Schemas, p2Schemas, p3Schemas } from "./seo";
+import { p0Schemas, p1Schemas, p2Schemas, p3Schemas, p4Schemas } from "./seo";
+import { linkPreviewsFaqItems, siteFaqItems } from "./faq";
 import { SITE_URL, siteConfig } from "./site";
 
 const source = (relativePath: string) => readFileSync(new URL(relativePath, import.meta.url), "utf8");
@@ -15,6 +16,7 @@ const privacySecurity = source("../pages/PrivacySecurity.tsx");
 const shoppingLinks = source("../pages/ShoppingLinks.tsx");
 const floatingBubblePermission = source("../pages/FloatingBubblePermission.tsx");
 const androidClipboardAccess = source("../pages/AndroidClipboardAccess.tsx");
+const faq = source("../pages/FAQ.tsx");
 const routes = source("../App.tsx");
 const staticHtml = source("../../index.html");
 const sitemap = source("../../public/sitemap.xml");
@@ -69,10 +71,6 @@ describe("P1 Clipboard Manager and Floating Bubble pages", () => {
   it("registers only the approved P1 routes and includes their canonical sitemap URLs", () => {
     expect(routes).toContain('path="/features/clipboard-manager"');
     expect(routes).toContain('path="/features/floating-bubble"');
-    for (const deferredP2Route of ["/faq"]) {
-      expect(routes).not.toContain(deferredP2Route);
-      expect(sitemap).not.toContain(`https://mrcopy.pro${deferredP2Route}`);
-    }
     expect(sitemap).toContain("https://mrcopy.pro/features/clipboard-manager");
     expect(sitemap).toContain("https://mrcopy.pro/features/floating-bubble");
     expect(sitemap).not.toContain("mrcopy.app");
@@ -176,8 +174,6 @@ describe("P3.1 Shopping Links use-case page", () => {
   it("registers the substantive shopping-links route and includes its canonical sitemap URL", () => {
     expect(routes).toContain('path="/use-cases/shopping-links"');
     expect(sitemap).toContain("https://mrcopy.pro/use-cases/shopping-links");
-    expect(routes).not.toContain('path="/faq"');
-    expect(sitemap).not.toContain("https://mrcopy.pro/faq");
   });
 
   it("provides unique P3.1 metadata and a truthful Link Previews breadcrumb schema", () => {
@@ -247,8 +243,6 @@ describe("P3.3 Android clipboard-access help page", () => {
   it("registers the Android clipboard-access route and includes its canonical sitemap URL", () => {
     expect(routes).toContain('path="/help/android-clipboard-access"');
     expect(sitemap).toContain("https://mrcopy.pro/help/android-clipboard-access");
-    expect(routes).not.toContain('path="/faq"');
-    expect(sitemap).not.toContain("https://mrcopy.pro/faq");
   });
 
   it("provides unique support metadata and a truthful Floating Bubble breadcrumb schema", () => {
@@ -277,5 +271,61 @@ describe("P3.3 Android clipboard-access help page", () => {
     for (const blockedClaim of ["automatic background capture", "image capture", "audio capture", "file capture", "cloud clipboard synchronization", "ios support", "desktop support", "automatic password masking"]) {
       expect(pageSource).not.toContain(blockedClaim);
     }
+  });
+});
+
+describe("P4.1 substantive sitewide FAQ route", () => {
+  it("registers the FAQ route and includes its canonical sitemap URL", () => {
+    expect(routes).toContain('path="/faq"');
+    expect(sitemap).toContain("https://mrcopy.pro/faq");
+  });
+
+  it("provides unique FAQ metadata, visible breadcrumb, and exact-match FAQPage schema", () => {
+    expect(faq).toContain('title: "Mr. Copy FAQ — Android Clipboard, Links & Privacy"');
+    expect(faq).toContain('href="/"');
+    expect(faq).toContain("siteFaqGroups.map");
+    expect(siteFaqItems.length).toBeGreaterThanOrEqual(10);
+    const schema = JSON.stringify(p4Schemas.siteFaq);
+    expect(schema).toContain('"WebPage"');
+    expect(schema).toContain('"BreadcrumbList"');
+    expect(schema).toContain('"FAQPage"');
+    expect(schema).toContain("https://mrcopy.pro/faq");
+    for (const item of siteFaqItems) expect(schema).toContain(item.question);
+  });
+
+  it("answers verified ecosystem questions and links to each detailed existing destination", () => {
+    const questions = siteFaqItems.map((item) => item.question);
+    const destinations = siteFaqItems.map((item) => item.href);
+    for (const question of ["What can Mr. Copy save?", "How does clipboard access work on Android 13 and later?", "What does the Floating Bubble do?", "Why does the Floating Bubble need Display over other apps?", "Which public links can Mr. Copy organize?", "Which shopping links are supported?", "Does Mr. Copy sync clipboard history to the cloud?", "How is saved local content protected?", "What is deleted when I remove my Mr. Copy account?"]) expect(questions).toContain(question);
+    for (const href of ["/features/clipboard-manager", "/features/floating-bubble", "/help/android-clipboard-access", "/help/floating-bubble-permission", "/features/link-previews", "/use-cases/shopping-links", "/features/privacy-security", "/privacy", "/delete-account"]) expect(destinations).toContain(href);
+  });
+
+  it("keeps P4.1 outside unsupported commercial, scraper, downloader, cloud-sync, and security-guarantee positioning", () => {
+    const sourceText = `${faq}\n${JSON.stringify(siteFaqItems)}`.toLowerCase();
+    for (const blockedClaim of ["free trial", "₹49", "instagram downloader", "youtube downloader", "facebook scraper", "unrestricted web scraping", "private-account extraction", "guaranteed security", "military-grade"]) expect(sourceText).not.toContain(blockedClaim);
+    expect(faq).toContain("does not add unconfirmed pricing, trial, or platform claims");
+  });
+});
+
+describe("P4.2 Link Previews FAQ content", () => {
+  it("uses a visible shared FAQ set and adds exact-match FAQPage schema to Link Previews", () => {
+    expect(linkPreviews).toContain("linkPreviewsFaqItems.map");
+    expect(linkPreviews).toContain("Link preview questions");
+    expect(linkPreviewsFaqItems).toHaveLength(7);
+    const schema = JSON.stringify(p2Schemas.linkPreviews);
+    expect(schema).toContain('"FAQPage"');
+    for (const item of linkPreviewsFaqItems) expect(schema).toContain(item.question);
+  });
+
+  it("covers the verified URL-preview workflow, available metadata, fallback, local storage, public requests, and Clipboard Manager relationship", () => {
+    const questions = linkPreviewsFaqItems.map((item) => item.question);
+    for (const question of ["What is a link preview in Mr. Copy?", "What information can a saved URL include?", "How does URL metadata enrichment work from my perspective?", "What happens when a URL cannot be resolved?", "Which link-preview information stays local?", "What network requests are involved in a public link preview?", "How do Link Previews relate to Clipboard Manager?"]) expect(questions).toContain(question);
+    for (const href of ["/features/clipboard-manager", "/features/privacy-security", "/privacy"]) expect(linkPreviewsFaqItems.map((item) => item.href)).toContain(href);
+    expect(linkPreviews).toContain('href="/faq"');
+  });
+
+  it("keeps P4.2 outside unlimited-source, scraping, private-account, downloader, and cloud-sync positioning", () => {
+    const sourceText = `${linkPreviews}\n${JSON.stringify(linkPreviewsFaqItems)}`.toLowerCase();
+    for (const blockedClaim of ["every website", "unrestricted web scraping", "private-account extraction", "instagram downloader", "youtube downloader", "facebook scraper", "cloud clipboard synchronization"]) expect(sourceText).not.toContain(blockedClaim);
   });
 });
