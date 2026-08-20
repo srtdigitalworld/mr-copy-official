@@ -6,6 +6,7 @@
   "assets": {
     "directory": "./dist/public",
     "not_found_handling": "404-page",
+    "html_handling": "none",
     "binding": "ASSETS",
     "run_worker_first": true
   },

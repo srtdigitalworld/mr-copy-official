@@ -403,6 +403,7 @@ describe("P7 initial-document route parity", () => {
 
   it("keeps Worker-first assets under explicit route control with a genuine static 404 fallback", () => {
     expect(wrangler).toContain('"not_found_handling": "404-page"');
+    expect(wrangler).toContain('"html_handling": "none"');
     expect(wrangler).toContain('"run_worker_first": true');
   });
 });
