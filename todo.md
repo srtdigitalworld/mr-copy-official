@@ -176,5 +176,7 @@
 - [x] Implement the substantive URL Preview and supported public-link feature page with verified YouTube, Instagram, Facebook, Google Maps, and shopping-reference boundaries.
 - [x] Implement the substantive Local-First Privacy and Security feature page with verified encrypted storage, Android Keystore, local-content/account-data boundary, and no-security-guarantee language.
 - [x] Update only necessary shared P0/P1 feature-hub links, sitemap entries, route schemas, and regression coverage; preserve existing P0/P1 content unless a verified issue requires a correction.
-- [ ] Run P2 production QA for routes, internal links, metadata, canonical, Open Graph, JSON-LD, sitemap, robots, indexability, desktop/tablet/mobile layout, keyboard accessibility, tests, TypeScript, build, console state, and claims firewall.
-- [ ] Deliver the detailed P2 implementation report and stop before P3 pending explicit approval.
+- [x] Run P2 production QA for routes, internal links, metadata, canonical, Open Graph, JSON-LD, sitemap, robots, indexability, desktop/tablet/mobile layout, keyboard accessibility, tests, TypeScript, build, console state, and claims firewall.
+- [x] Capture live production tablet and mobile evidence for both P2 routes at the required breakpoints.
+- [x] Perform explicit live keyboard and console/network QA for both P2 routes, then record evidence-backed findings only.
+- [x] Verify the detailed P2 implementation report contains the completed live QA evidence, then stop before P3 pending explicit approval.
