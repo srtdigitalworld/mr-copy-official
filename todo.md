@@ -146,3 +146,12 @@
 - [x] Deliver the P0 completion report and stop for approval before P1 routes or topical pages.
 - [x] Remove or correct the unsupported website-analytics statement in the Privacy page using only verified implementation evidence.
 - [x] Add and verify the approved existing-route `/pricing` to `/privacy` internal link about account and entitlement data handling.
+
+## P0 Finalization and Production QA
+
+- [x] Keep the Google Play URL, price, currency, billing period, plan, trial, eligibility, date, and benefit claims withheld until explicit commercial confirmation is supplied.
+- [x] Run final production QA for Homepage, Features, Privacy, and Pricing covering rendered metadata, schema, canonical, robots, sitemap, semantic content, and internal links.
+- [x] Run final production technical QA covering routes, tests, TypeScript, build, console state, accessibility, and mobile/tablet/desktop rendering.
+- [x] Document the final P0 QA findings, commercial verification status, and explicit P1 stop condition without starting P1.
+- [x] Capture mobile and tablet responsive evidence from the live `https://mrcopy.pro` P0 pages and add the result to the final QA report.
+- [x] Re-read and deterministically verify that the final P0 QA report contains the completed live production mobile and tablet responsive findings.
