@@ -127,3 +127,9 @@
 - [x] Replace obsolete `mrcopy.app` sitemap URLs with canonical `mrcopy.pro` URLs without changing page design or routes.
 - [x] Add a regression test or deterministic check to prevent an obsolete domain from returning in the sitemap.
 - [x] Publish and verify `https://mrcopy.pro/sitemap.xml` returns valid sitemap content using only canonical production URLs.
+
+## Semantic SEO Website Blueprint
+
+- [x] Obtain the actual Product Intelligence Report or equivalent verified Android-code evidence required as the factual source of truth.
+- [x] Build the product semantic model, entity graph, intent maps, and claims/limitations firewall from verified evidence only.
+- [x] Produce the complete Semantic SEO Website Blueprint, including information architecture, page specifications, metadata, schema, internal links, roadmap, and developer handoff.
