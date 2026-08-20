@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
+import worker from "./index";
 import { DeletionError, FIREBASE_ISSUER, FIREBASE_PROJECT_ID, deleteVerifiedFirebaseAccount, getServiceAccountAccessToken, verifyFirebaseIdToken } from "./firebase";
 
 function encodedToken(payload: Record<string, unknown>): string {
@@ -27,6 +28,14 @@ async function signedTokenAndPublicJwk(payload: Record<string, unknown>) {
 }
 
 describe("account deletion service", () => {
+  it("redirects plain HTTP requests to the equivalent HTTPS canonical URL before static assets or API handling", async () => {
+    const assets = { fetch: vi.fn() };
+    const response = await worker.fetch(new Request("http://mrcopy.pro/features/link-previews?ref=p6"), { ASSETS: assets, FIREBASE_SERVICE_ACCOUNT: "unused" });
+    expect(response.status).toBe(308);
+    expect(response.headers.get("Location")).toBe("https://mrcopy.pro/features/link-previews?ref=p6");
+    expect(assets.fetch).not.toHaveBeenCalled();
+  });
+
   it("uses only the UID returned by verified-token processing for Firestore and Authentication deletion", async () => {
     const fetcher = vi.fn()
       .mockResolvedValueOnce(new Response(JSON.stringify({ name: "users/verified-user" }), { status: 200 }))

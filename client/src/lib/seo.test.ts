@@ -28,7 +28,8 @@ const sitemap = source("../../public/sitemap.xml");
 describe("P0 semantic SEO implementation", () => {
   it("uses the canonical production host in static metadata and route schema", () => {
     expect(SITE_URL).toBe("https://mrcopy.pro");
-    expect(staticHtml).toContain('<link rel="canonical" href="https://mrcopy.pro/" />');
+    expect(staticHtml).toContain('<link rel="canonical" href="https://mrcopy.pro" />');
+    expect(staticHtml).toContain('<meta property="og:url" content="https://mrcopy.pro" />');
     expect(JSON.stringify(p0Schemas)).toContain("https://mrcopy.pro");
   });
 

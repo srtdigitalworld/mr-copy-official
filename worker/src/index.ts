@@ -54,6 +54,10 @@ async function handleDeletion(request: Request, env: Env): Promise<Response> {
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
+    if (url.protocol === "http:") {
+      url.protocol = "https:";
+      return Response.redirect(url.toString(), 308);
+    }
     if (url.pathname === "/api/account-delete") return handleDeletion(request, env);
     return env.ASSETS.fetch(request);
   },
