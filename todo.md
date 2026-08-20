@@ -243,5 +243,5 @@
 - [x] Build and document the complete P9 gap matrix, entity/question map, content-information-gain assessment, internal-link graph, technical/accessibility/UX review, and evidence-based Critical/High/Medium/Low priority decisions.
 - [x] Implement only genuine Critical and High-value evidence-backed improvements, preferring existing pages and preserving all claims, architecture, deferred commercial facts, Google Play readiness, DNS, and Android boundaries.
 - [x] Prepare only non-executed legitimate off-page reference opportunities and document all deferred items; do not contact, submit, buy, or create external accounts.
-- [ ] Run full P9 regression, route/crawl/initial-HTML/schema/metadata/sitemap/robots, responsive, accessibility, console/network, TypeScript, and production-build QA.
-- [ ] Deliver the complete Remaining Work Completion Report and stop without starting a further artificial phase.
+- [x] Run full P9 regression, route/crawl/initial-HTML/schema/metadata/sitemap/robots, responsive, accessibility, console/network, TypeScript, and production-build QA.
+- [x] Deliver the complete Remaining Work Completion Report and stop without starting a further artificial phase.
