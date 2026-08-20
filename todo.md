@@ -187,5 +187,5 @@
 - [x] Implement P3.1 at `/use-cases/shopping-links` with verified supported-store reference fields, availability limits, contextual links, metadata, schema, sitemap entry, and regression coverage.
 - [x] Implement P3.2 at `/help/floating-bubble-permission` with verified Android overlay-permission purpose, setup, disable path, troubleshooting boundaries, contextual links, metadata, schema, sitemap entry, and regression coverage.
 - [x] Implement P3.3 at `/help/android-clipboard-access` with verified Android clipboard restrictions, bubble-tap behavior, user controls, contextual links, metadata, schema, sitemap entry, and regression coverage.
-- [ ] Run P3 production QA for routes, internal links, metadata, canonical, Open Graph, JSON-LD, sitemap, robots, indexability, desktop/tablet/mobile layout, keyboard accessibility, tests, TypeScript, build, console/network state, and claims firewall.
-- [ ] Deliver the detailed P3 report and stop before P4 pending explicit approval.
+- [x] Run P3 production QA for routes, internal links, metadata, canonical, Open Graph, JSON-LD, sitemap, robots, indexability, desktop/tablet/mobile layout, keyboard accessibility, tests, TypeScript, build, console/network state, and claims firewall.
+- [x] Deliver the detailed P3 report and stop before P4 pending explicit approval.
