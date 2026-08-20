@@ -126,4 +126,4 @@
 - [x] Locate the sitemap source and confirm every intended public canonical route.
 - [x] Replace obsolete `mrcopy.app` sitemap URLs with canonical `mrcopy.pro` URLs without changing page design or routes.
 - [x] Add a regression test or deterministic check to prevent an obsolete domain from returning in the sitemap.
-- [ ] Publish and verify `https://mrcopy.pro/sitemap.xml` returns valid sitemap content using only canonical production URLs.
+- [x] Publish and verify `https://mrcopy.pro/sitemap.xml` returns valid sitemap content using only canonical production URLs.
