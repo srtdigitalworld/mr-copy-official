@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { p0Schemas, p1Schemas, p2Schemas } from "./seo";
+import { p0Schemas, p1Schemas, p2Schemas, p3Schemas } from "./seo";
 import { SITE_URL, siteConfig } from "./site";
 
 const source = (relativePath: string) => readFileSync(new URL(relativePath, import.meta.url), "utf8");
@@ -12,6 +12,9 @@ const clipboardManager = source("../pages/ClipboardManager.tsx");
 const floatingBubble = source("../pages/FloatingBubble.tsx");
 const linkPreviews = source("../pages/LinkPreviews.tsx");
 const privacySecurity = source("../pages/PrivacySecurity.tsx");
+const shoppingLinks = source("../pages/ShoppingLinks.tsx");
+const floatingBubblePermission = source("../pages/FloatingBubblePermission.tsx");
+const androidClipboardAccess = source("../pages/AndroidClipboardAccess.tsx");
 const routes = source("../App.tsx");
 const staticHtml = source("../../index.html");
 const sitemap = source("../../public/sitemap.xml");
@@ -66,7 +69,7 @@ describe("P1 Clipboard Manager and Floating Bubble pages", () => {
   it("registers only the approved P1 routes and includes their canonical sitemap URLs", () => {
     expect(routes).toContain('path="/features/clipboard-manager"');
     expect(routes).toContain('path="/features/floating-bubble"');
-    for (const deferredP2Route of ["/use-cases/shopping-links", "/help/floating-bubble-permission", "/help/android-clipboard-access", "/faq"]) {
+    for (const deferredP2Route of ["/faq"]) {
       expect(routes).not.toContain(deferredP2Route);
       expect(sitemap).not.toContain(`https://mrcopy.pro${deferredP2Route}`);
     }
@@ -122,7 +125,7 @@ describe("P2 consolidated Link Previews and Privacy & Security pages", () => {
       expect(routes).toContain(`path="${route}"`);
       expect(sitemap).toContain(`https://mrcopy.pro${route}`);
     }
-    for (const thinRoute of ["/features/youtube-extractor", "/features/instagram-extractor", "/features/facebook-extractor", "/features/google-maps-parser", "/features/shopping-link-parser", "/use-cases/shopping-links"]) {
+    for (const thinRoute of ["/features/youtube-extractor", "/features/instagram-extractor", "/features/facebook-extractor", "/features/google-maps-parser", "/features/shopping-link-parser"]) {
       expect(routes).not.toContain(thinRoute);
       expect(sitemap).not.toContain(`https://mrcopy.pro${thinRoute}`);
     }
@@ -166,5 +169,113 @@ describe("P2 consolidated Link Previews and Privacy & Security pages", () => {
       expect(p2Source).not.toContain(blockedClaim);
     }
     expect(privacySecurity).toContain("does not claim to be unhackable");
+  });
+});
+
+describe("P3.1 Shopping Links use-case page", () => {
+  it("registers the substantive shopping-links route and includes its canonical sitemap URL", () => {
+    expect(routes).toContain('path="/use-cases/shopping-links"');
+    expect(sitemap).toContain("https://mrcopy.pro/use-cases/shopping-links");
+    expect(routes).not.toContain('path="/faq"');
+    expect(sitemap).not.toContain("https://mrcopy.pro/faq");
+  });
+
+  it("provides unique P3.1 metadata and a truthful Link Previews breadcrumb schema", () => {
+    expect(shoppingLinks).toContain('title: "Save Shopping Links and Product Details on Android"');
+    expect(shoppingLinks).toContain('href="/features/link-previews"');
+    const schema = JSON.stringify(p3Schemas.shoppingLinks);
+    expect(schema).toContain('"WebPage"');
+    expect(schema).toContain('"BreadcrumbList"');
+    expect(schema).toContain("https://mrcopy.pro/features/link-previews");
+    expect(schema).toContain("https://mrcopy.pro/use-cases/shopping-links");
+  });
+
+  it("covers the supported public-store workflow and source limits without marketplace claims", () => {
+    expect(shoppingLinks).toContain("Keep shopping links and product details together on Android");
+    expect(shoppingLinks).toContain("supportedShoppingPlatforms.map");
+    expect(shoppingLinks).toContain("price or MRP");
+    expect(shoppingLinks).toContain("private, blocked, slow, changed, or rate-limited source can return partial details");
+    expect(shoppingLinks).toContain('href="/features/clipboard-manager"');
+    expect(shoppingLinks).toContain('href="/privacy"');
+    expect(linkPreviews).toContain('href="/use-cases/shopping-links"');
+  });
+
+  it("keeps P3.1 outside unsupported commerce, downloader, platform, and cloud-sync positioning", () => {
+    const pageSource = shoppingLinks.toLowerCase();
+    expect(shoppingLinks).toContain("not a marketplace listing, checkout, affiliate service, or guarantee of current price, stock, ratings, or availability");
+    for (const blockedClaim of ["live-price", "live-stock", "price comparison", "instagram downloader", "cloud clipboard synchronization", "ios support", "desktop support"]) {
+      expect(pageSource).not.toContain(blockedClaim);
+    }
+  });
+});
+
+describe("P3.2 Floating Bubble permission-help page", () => {
+  it("registers the permission-help route and includes its canonical sitemap URL", () => {
+    expect(routes).toContain('path="/help/floating-bubble-permission"');
+    expect(sitemap).toContain("https://mrcopy.pro/help/floating-bubble-permission");
+  });
+
+  it("provides unique support metadata and a truthful Floating Bubble breadcrumb schema", () => {
+    expect(floatingBubblePermission).toContain('title: "Enable Floating Bubble Permission on Android"');
+    expect(floatingBubblePermission).toContain('href="/features/floating-bubble"');
+    const schema = JSON.stringify(p3Schemas.floatingBubblePermission);
+    expect(schema).toContain('"WebPage"');
+    expect(schema).toContain('"BreadcrumbList"');
+    expect(schema).toContain("https://mrcopy.pro/features/floating-bubble");
+    expect(schema).toContain("https://mrcopy.pro/help/floating-bubble-permission");
+  });
+
+  it("explains the verified overlay purpose, user control, disable path, and support limit", () => {
+    expect(floatingBubblePermission).toContain("How to enable the Mr. Copy Floating Bubble on Android");
+    expect(floatingBubblePermission).toContain("Display over other apps");
+    expect(floatingBubblePermission).toContain("does not give Mr. Copy access to another app’s private information");
+    expect(floatingBubblePermission).toContain("turn off Display over other apps");
+    expect(floatingBubblePermission).toContain("does not bypass Android privacy protections");
+    expect(floatingBubble).toContain('href="/help/floating-bubble-permission"');
+  });
+
+  it("keeps P3.2 outside unsupported private-access, bypass, capture, and platform claims", () => {
+    const pageSource = floatingBubblePermission.toLowerCase();
+    expect(floatingBubblePermission).toContain("does not bypass Android privacy protections or promise uninterrupted background clipboard access");
+    for (const blockedClaim of ["surveillance", "permission bypass", "image capture", "file capture", "ios support", "desktop support", "cloud clipboard synchronization"]) {
+      expect(pageSource).not.toContain(blockedClaim);
+    }
+  });
+});
+
+describe("P3.3 Android clipboard-access help page", () => {
+  it("registers the Android clipboard-access route and includes its canonical sitemap URL", () => {
+    expect(routes).toContain('path="/help/android-clipboard-access"');
+    expect(sitemap).toContain("https://mrcopy.pro/help/android-clipboard-access");
+    expect(routes).not.toContain('path="/faq"');
+    expect(sitemap).not.toContain("https://mrcopy.pro/faq");
+  });
+
+  it("provides unique support metadata and a truthful Floating Bubble breadcrumb schema", () => {
+    expect(androidClipboardAccess).toContain('title: "How Clipboard Access Works on Android"');
+    expect(androidClipboardAccess).toContain('href="/features/floating-bubble"');
+    const schema = JSON.stringify(p3Schemas.androidClipboardAccess);
+    expect(schema).toContain('"WebPage"');
+    expect(schema).toContain('"BreadcrumbList"');
+    expect(schema).toContain("https://mrcopy.pro/features/floating-bubble");
+    expect(schema).toContain("https://mrcopy.pro/help/android-clipboard-access");
+  });
+
+  it("explains Android 13+ foreground interaction and reuses saved local references without promising background capture", () => {
+    expect(androidClipboardAccess).toContain("How clipboard access works with Mr. Copy on Android");
+    expect(androidClipboardAccess).toContain("On Android 13 and later, tapping the Floating Bubble can bring Mr. Copy’s required foreground interaction into focus");
+    expect(androidClipboardAccess).toContain("not a privacy bypass");
+    expect(androidClipboardAccess).toContain("does not claim uninterrupted background clipboard access");
+    expect(androidClipboardAccess).toContain('href="/help/floating-bubble-permission"');
+    expect(floatingBubble).toContain('href="/help/android-clipboard-access"');
+    expect(floatingBubblePermission).toContain('href="/help/android-clipboard-access"');
+  });
+
+  it("keeps P3.3 outside unsupported bypass, automatic-capture, cloud, cross-platform, and non-text claims", () => {
+    const pageSource = androidClipboardAccess.toLowerCase();
+    expect(androidClipboardAccess).toContain("not a privacy bypass");
+    for (const blockedClaim of ["automatic background capture", "image capture", "audio capture", "file capture", "cloud clipboard synchronization", "ios support", "desktop support", "automatic password masking"]) {
+      expect(pageSource).not.toContain(blockedClaim);
+    }
   });
 });

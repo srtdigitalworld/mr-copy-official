@@ -180,3 +180,12 @@
 - [x] Capture live production tablet and mobile evidence for both P2 routes at the required breakpoints.
 - [x] Perform explicit live keyboard and console/network QA for both P2 routes, then record evidence-backed findings only.
 - [x] Verify the detailed P2 implementation report contains the completed live QA evidence, then stop before P3 pending explicit approval.
+
+## P3 Semantic SEO Support and Use-Case Pages
+
+- [x] Map the approved P3.1 Shopping Links, P3.2 Floating Bubble Permission, and P3.3 Android Clipboard Access page specifications to verified Product Intelligence evidence, existing components, design patterns, intent, entities, IQQI/K2Q questions, and claims boundaries.
+- [x] Implement P3.1 at `/use-cases/shopping-links` with verified supported-store reference fields, availability limits, contextual links, metadata, schema, sitemap entry, and regression coverage.
+- [x] Implement P3.2 at `/help/floating-bubble-permission` with verified Android overlay-permission purpose, setup, disable path, troubleshooting boundaries, contextual links, metadata, schema, sitemap entry, and regression coverage.
+- [x] Implement P3.3 at `/help/android-clipboard-access` with verified Android clipboard restrictions, bubble-tap behavior, user controls, contextual links, metadata, schema, sitemap entry, and regression coverage.
+- [ ] Run P3 production QA for routes, internal links, metadata, canonical, Open Graph, JSON-LD, sitemap, robots, indexability, desktop/tablet/mobile layout, keyboard accessibility, tests, TypeScript, build, console/network state, and claims firewall.
+- [ ] Deliver the detailed P3 report and stop before P4 pending explicit approval.

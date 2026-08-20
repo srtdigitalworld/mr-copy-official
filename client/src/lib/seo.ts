@@ -34,6 +34,25 @@ function nestedFeatureSchema(label: string, name: string, description: string, p
   ] as const;
 }
 
+function relatedRouteSchema(parentLabel: string, parentPath: string, label: string, name: string, description: string, path: string) {
+  const url = `${SITE_URL}${path}`;
+  return [
+    {
+      ...webPageSchema(name, description, path),
+      about: { "@id": applicationId },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+        { "@type": "ListItem", position: 2, name: parentLabel, item: `${SITE_URL}${parentPath}` },
+        { "@type": "ListItem", position: 3, name: label, item: url },
+      ],
+    },
+  ] as const;
+}
+
 function webPageSchema(name: string, description: string, path: string) {
   return {
     "@context": "https://schema.org",
@@ -117,5 +136,32 @@ export const p2Schemas = {
     "Local Encrypted Clipboard Storage for Android",
     "Learn how Mr. Copy keeps saved clips local with encrypted storage and clear account-data boundaries.",
     "/features/privacy-security",
+  ),
+} as const;
+
+export const p3Schemas = {
+  shoppingLinks: relatedRouteSchema(
+    "Link Previews",
+    "/features/link-previews",
+    "Shopping Links",
+    "Save Shopping Links and Product Details on Android",
+    "Save supported shopping links from India-focused stores and keep available product details with your local Android references in Mr. Copy.",
+    "/use-cases/shopping-links",
+  ),
+  floatingBubblePermission: relatedRouteSchema(
+    "Floating Bubble",
+    "/features/floating-bubble",
+    "Permission",
+    "Enable Floating Bubble Permission on Android",
+    "Learn why Mr. Copy needs Display over other apps and how to enable or disable the Floating Bubble permission in Android settings.",
+    "/help/floating-bubble-permission",
+  ),
+  androidClipboardAccess: relatedRouteSchema(
+    "Floating Bubble",
+    "/features/floating-bubble",
+    "Android Clipboard Access",
+    "How Clipboard Access Works on Android",
+    "Learn how Android clipboard protections affect Mr. Copy and why tapping the Floating Bubble can help on Android 13 and later.",
+    "/help/android-clipboard-access",
   ),
 } as const;
