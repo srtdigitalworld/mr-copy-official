@@ -1,5 +1,5 @@
 import { canonicalPublicRoutes, type CanonicalPublicRoute } from "@shared/publicRoutes";
-import { p0Schemas, p1Schemas, p2Schemas, p3Schemas, p4Schemas, p5Schemas, type StructuredData } from "./seo";
+import { ownedAssetSchemas, p0Schemas, p1Schemas, p2Schemas, p3Schemas, p4Schemas, p5Schemas, type StructuredData } from "./seo";
 
 export type InitialDocument = {
   path: CanonicalPublicRoute;
@@ -29,6 +29,9 @@ export const initialDocuments: readonly InitialDocument[] = [
   { path: "/terms", title: "Terms of Use", description: "Read the Mr. Copy service terms covering acceptable use, third-party references, subscriptions, account responsibilities, and limitations.", h1: "Terms for using Mr. Copy.", schema: p5Schemas.terms },
   { path: "/delete-account", title: "Delete Account", description: "Securely delete a Mr. Copy Firebase account after Google authentication, while keeping local clipboard data and Google Play subscriptions separate.", h1: "Delete your Mr. Copy account.", schema: p5Schemas.deleteAccount },
   { path: "/contact", title: "Contact", description: "Official Mr. Copy developer and support contact information.", h1: "Official Mr. Copy contact details.", schema: p5Schemas.contact },
+  { path: "/press", title: "Mr. Copy Press & Media Resources", description: "Product facts, verified capabilities, media contact details, and useful references for Mr. Copy — an Android clipboard and reference manager.", h1: "Useful information for coverage, reviews, and references.", schema: ownedAssetSchemas.press },
+  { path: "/guides/android-clipboard-privacy", title: "Android Clipboard Privacy Guide", description: "A practical guide to Android clipboard privacy, local storage considerations, and questions to ask when choosing a clipboard manager.", h1: "Understand what happens after you copy.", schema: ownedAssetSchemas.androidClipboardPrivacy },
+  { path: "/guides/save-copied-text-android", title: "How to Save Copied Text on Android", description: "A practical guide to saving copied text, organizing reusable references, and understanding Android clipboard limitations.", h1: "Save the copied text you will actually need again.", schema: ownedAssetSchemas.saveCopiedTextAndroid },
 ] as const;
 
 const initialDocumentByPath = new Map(initialDocuments.map((document) => [document.path, document]));

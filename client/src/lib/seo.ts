@@ -230,3 +230,18 @@ export const p5Schemas = {
     about: { "@id": applicationId },
   },
 } as const;
+
+export const ownedAssetSchemas = {
+  press: [
+    { ...webPageSchema("Mr. Copy Press & Media Resources", "Product facts, verified capabilities, media contact details, and useful references for Mr. Copy — an Android clipboard and reference manager.", "/press"), about: { "@id": applicationId } },
+    { "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: "Home", item: SITE_URL }, { "@type": "ListItem", position: 2, name: "Press & Media", item: `${SITE_URL}/press` }] },
+  ],
+  androidClipboardPrivacy: [
+    { ...webPageSchema("Android Clipboard Privacy Guide", "A practical guide to Android clipboard privacy, local storage considerations, and questions to ask when choosing a clipboard manager.", "/guides/android-clipboard-privacy"), about: { "@id": applicationId } },
+    { "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: "Home", item: SITE_URL }, { "@type": "ListItem", position: 2, name: "Android Clipboard Privacy Guide", item: `${SITE_URL}/guides/android-clipboard-privacy` }] },
+  ],
+  saveCopiedTextAndroid: [
+    { ...webPageSchema("How to Save Copied Text on Android", "A practical guide to saving copied text, organizing reusable references, and understanding Android clipboard limitations.", "/guides/save-copied-text-android"), about: { "@id": applicationId } },
+    { "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: "Home", item: SITE_URL }, { "@type": "ListItem", position: 2, name: "Save Copied Text on Android", item: `${SITE_URL}/guides/save-copied-text-android` }] },
+  ],
+} as const;

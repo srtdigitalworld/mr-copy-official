@@ -14,6 +14,9 @@ export const canonicalPublicRoutes = [
   "/terms",
   "/delete-account",
   "/contact",
+  "/press",
+  "/guides/android-clipboard-privacy",
+  "/guides/save-copied-text-android",
 ] as const;
 
 export type CanonicalPublicRoute = (typeof canonicalPublicRoutes)[number];
